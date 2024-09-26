@@ -1,0 +1,50 @@
+services:
+  locadora-db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  locadora-backend:
+    build: ./backend/springboot
+    image: locadora-back
+    container_name: locadora-back-${CI_COMMIT_REF_SLUG:-unknown}
+    depends_on:
+      - locadora-db
+    ports:
+      - "${BACK_PORT}:8040"
+    environment:
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+
+  locadora-frontend:
+    build: 
+      context: ./frontend
+      args:
+        VITE_BASE_URL: ${VITE_BASE_URL}
+
+    image: locadora-front
+    container_name: locadora-front-${CI_COMMIT_REF_SLUG:-unknown}
+    depends_on:
+      - locadora-backend
+    ports:
+      - "${FRONT_PORT}:80"
+    volumes:
+      - /usr/share/nginx/html
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.63.0.0/16
+
+volumes:
+  postgres_data:
