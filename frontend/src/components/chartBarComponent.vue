@@ -1,14 +1,33 @@
 <template>
   <div>
     <div class="chart-container">
-      <div class="title">Relações de livros</div>
+      <div class="title">
+
+        <span class="text-h6">Relações de livros</span>
+
+        <span class="flex">
+          Meses:
+
+          <q-input
+            v-model="numberOfMonths"
+            type="number"
+            filled
+            class="inputMonths"
+            dense
+            item-aligned
+            min=1
+          />
+        </span>
+
+
+      </div>
       <canvas id="relacoesLivrosChart"></canvas>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { Chart, registerables } from 'chart.js';
 import { api } from 'src/boot/axios';
 
@@ -18,14 +37,18 @@ defineOptions({
   name: 'chartBarComponent'
 });
 
+const numberOfMonths = ref(1);
+
 const rentsQtd = ref(0);
 const late = ref(0);
 const delivered = ref(0);
 const delayed = ref(0);
 
+let chartInstance = null;
+
 const getRents = async () => {
   try {
-    const response = await api.get('/dashboard/rentsQuantity');
+    const response = await api.get('/dashboard/rentsQuantity', { params: { numberOfMonths: numberOfMonths.value } });
     rentsQtd.value = response.data;
   } catch (error) {
     showNotification('negative', "Erro ao obter dados!");
@@ -35,7 +58,7 @@ const getRents = async () => {
 
 const getRentsLate = async () => {
   try {
-    const response = await api.get('/dashboard/rentsLateQuantity');
+    const response = await api.get('/dashboard/rentsLateQuantity', { params: { numberOfMonths: numberOfMonths.value } });
     late.value = response.data;
   } catch (error) {
     showNotification('negative', "Erro ao obter dados!");
@@ -45,7 +68,7 @@ const getRentsLate = async () => {
 
 const getRentsDelivered = async () => {
   try {
-    const response = await api.get('/dashboard/deliveredInTimeQuantity');
+    const response = await api.get('/dashboard/deliveredInTimeQuantity', { params: { numberOfMonths: numberOfMonths.value } });
     delivered.value = response.data;
   } catch (error) {
     showNotification('negative', "Erro ao obter dados!");
@@ -55,7 +78,7 @@ const getRentsDelivered = async () => {
 
 const getRentsDelayed = async () => {
   try {
-    const response = await api.get('/dashboard/deliveredWithDelayQuantity');
+    const response = await api.get('/dashboard/deliveredWithDelayQuantity', { params: { numberOfMonths: numberOfMonths.value } });
     delayed.value = response.data;
   } catch (error) {
     showNotification('negative', "Erro ao obter dados!");
@@ -63,14 +86,30 @@ const getRentsDelayed = async () => {
   }
 };
 
-onMounted(async () => {
+const updateChart = () => {
+  if (chartInstance) {
+    chartInstance.data.datasets[0].data = [rentsQtd.value, late.value, delivered.value, delayed.value];
+    chartInstance.update();
+  }
+};
+
+const fetchDataAndUpdateChart = async () => {
   await getRents();
   await getRentsLate();
   await getRentsDelivered();
   await getRentsDelayed();
+  updateChart();
+};
+
+watch(numberOfMonths, async () => {
+  await fetchDataAndUpdateChart();
+});
+
+onMounted(async () => {
+  await fetchDataAndUpdateChart();
 
   const ctx = document.getElementById('relacoesLivrosChart').getContext('2d');
-  new Chart(ctx, {
+  chartInstance = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: ['Alugados', 'Atrasados', 'Devolvidos no prazo', 'Devolvidos fora do prazo'],
@@ -95,9 +134,21 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-  #relacoesLivrosChart{
-    margin-bottom: 1rem;
-  }
+.inputMonths{
+  display: flex;
+  justify-content: center;
+  width: 90px;
+  border-radius: 15px;
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+}
+
+#relacoesLivrosChart{
+  margin-bottom: 1rem;
+}
 
 .chart-container {
   border-radius: 5px;
@@ -107,11 +158,14 @@ onMounted(async () => {
   width: 100%;
   min-width: 450px;
   max-width: fit-content;
-  height: 220px;
+  height: 290px;
   text-align: center;
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   font-weight: bold;
 }
 

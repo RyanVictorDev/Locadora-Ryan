@@ -164,12 +164,11 @@
     >
       <div class="flex-column full-height">
         <q-list>
-          <q-item-label header class="text-h6 whiteFont text-left text-weight-regular borderBottom">
-            <span class="roleCss">
-              {{ role }}
+          <q-item class="roleCss q-mt-sm q-mb-xl">
               <q-icon class="q-ml-xsm text-h5 text-blue-grey-2" :name="iconRole"/>
-            </span>
-          </q-item-label>
+
+              <q-item-label>{{ role }}</q-item-label>
+          </q-item>
 
           <SidebarComponent
             v-for="link in linksList"
@@ -380,10 +379,11 @@ const miniState = ref(true);
 
 .roleCss{
   display: flex;
+  align-items: center;
+  margin-inline: auto;
   max-width: fit-content;
-  gap: 3px;
+  gap: 5px;
   background-color: #1e6b51;
-  padding: 5px;
   border-radius: 8px;
 }
 

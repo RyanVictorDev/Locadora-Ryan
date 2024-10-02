@@ -8,7 +8,8 @@
       v-if="props.icon"
       avatar
     >
-      <q-icon :name="props.icon" />
+
+    <q-icon :name="props.icon" />
     </q-item-section>
 
     <q-item-section>
@@ -27,7 +28,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  
+
   route: {
     type: String,
     default: ''

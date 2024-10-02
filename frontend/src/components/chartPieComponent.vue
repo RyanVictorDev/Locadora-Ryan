@@ -1,7 +1,22 @@
 <template>
   <div>
     <div class="chart-container">
-      <div class="title">Livros mais alugados</div>
+      <div class="title">
+        <span class="text-h5">Livros mais alugados</span>
+
+        <span class="flex">
+          Meses:
+          <q-input
+            v-model="numberOfMonths"
+            type="number"
+            filled
+            class="inputMonths"
+            dense
+            item-aligned
+            min=1
+          />
+        </span>
+      </div>
       <canvas id="LivrosChart"></canvas>
     </div>
   </div>
@@ -9,9 +24,9 @@
 
 <script setup>
 import { useQuasar } from 'quasar';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { Chart, registerables } from 'chart.js';
-import { api, authenticate } from 'src/boot/axios';
+import { api } from 'src/boot/axios';
 
 const $q = useQuasar();
 
@@ -26,32 +41,47 @@ const showNotification = (type, msg) => {
 
 Chart.register(...registerables);
 
-defineOptions({
-  name: 'chartPieComponent'
-});
+const numberOfMonths = ref(1);
+const mostRented1 = ref({});
+const mostRented2 = ref({});
+const mostRented3 = ref({});
 
-const mostRented1 = ref('');
-const mostRented2 = ref('');
-const mostRented3 = ref('');
-
+let chartInstance = null;
 
 const getRents = async () => {
   try {
-    const response = await api.get('/dashboard/bookMoreRented');
-    mostRented1.value = response.data[0];
-    mostRented2.value = response.data[1];
-    mostRented3.value = response.data[2];
+    const response = await api.get('/dashboard/bookMoreRented', { params: { numberOfMonths: numberOfMonths.value } });
+    mostRented1.value = response.data[0] || { name: '', totalRents: 0 };
+    mostRented2.value = response.data[1] || { name: '', totalRents: 0 };
+    mostRented3.value = response.data[2] || { name: '', totalRents: 0 };
   } catch (error) {
     showNotification('negative', "Erro ao obter dados!");
     console.error("Erro ao obter dados:", error);
   }
 };
 
-onMounted( async () => {
+const updateChart = () => {
+  if (chartInstance) {
+    chartInstance.data.labels = [mostRented1.value.name, mostRented2.value.name, mostRented3.value.name];
+    chartInstance.data.datasets[0].data = [mostRented1.value.totalRents, mostRented2.value.totalRents, mostRented3.value.totalRents];
+    chartInstance.update();
+  }
+};
+
+const fetchDataAndUpdateChart = async () => {
   await getRents();
+  updateChart();
+};
+
+watch(() => numberOfMonths.value, async () => {
+  await fetchDataAndUpdateChart();
+});
+
+onMounted(async () => {
+  await fetchDataAndUpdateChart();
 
   const ctx2 = document.getElementById('LivrosChart').getContext('2d');
-  new Chart(ctx2, {
+  chartInstance = new Chart(ctx2, {
     type: 'pie',
     data: {
       labels: [mostRented1.value.name, mostRented2.value.name, mostRented3.value.name],
@@ -71,9 +101,20 @@ onMounted( async () => {
 </script>
 
 <style scoped>
+.inputMonths {
+  display: flex;
+  justify-content: center;
+  width: 90px;
+  border-radius: 15px;
+}
 
-#LivrosChart{
-  margin-bottom: 1rem;
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+#LivrosChart {
+  margin-bottom: 3rem;
 }
 
 .chart-container {
@@ -84,11 +125,14 @@ onMounted( async () => {
   width: 100%;
   min-width: 500px;
   max-width: fit-content;
-  height: 220px;
+  height: 290px;
   text-align: center;
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   margin-bottom: 1px;
   font-weight: bold;
 }

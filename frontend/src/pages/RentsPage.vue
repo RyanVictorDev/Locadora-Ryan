@@ -30,16 +30,17 @@
       <div class="row justify-center q-my-md">
         <q-btn
           :disable="page.value <= 0"
-          label="Página Anterior"
+          icon="chevron_left"
           @click="prevPage"
           class="q-mx-sm"
         />
         <q-btn
-          label="Próxima Página"
+          icon="chevron_right"
           @click="nextPage"
           class="q-mx-sm"
         />
       </div>
+
 
       <q-dialog v-model="dialogs.rent.visible" persistent>
         <q-card class="radios">

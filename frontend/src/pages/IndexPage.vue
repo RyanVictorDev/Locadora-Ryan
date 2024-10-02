@@ -17,6 +17,20 @@
         :columns="columns"
         @sort="handleSort"
       />
+
+      <div class="row justify-center q-my-md">
+        <q-btn
+          :disable="page.value <= 0"
+          icon="chevron_left"
+          @click="prevPage"
+          class="q-mx-sm"
+        />
+        <q-btn
+          icon="chevron_right"
+          @click="nextPage"
+          class="q-mx-sm"
+        />
+      </div>
     </div>
   </q-page>
 </template>
@@ -32,7 +46,7 @@ import TableComponent from 'src/components/TableComponent.vue';
 const $q = useQuasar();
 const srch = ref('');
 const rows = ref([]);
-const sortBy = ref(''); 
+const sortBy = ref('');
 const sortDesc = ref(false);
 
 const columns = [
@@ -78,11 +92,25 @@ onMounted(() => {
   getRows();
 });
 
+const page = ref(0)
+
+const prevPage = () => {
+  if (page.value > 0) {
+    page.value--;
+    getRows(srch.value);
+  }
+};
+
+const nextPage = () => {
+  page.value++;
+  getRows(srch.value);
+};
+
 const getRows = (srch = '') => {
-  api.get('/dashboard/rentsPerRenter')
+  api.get('/dashboard/rentsPerRenter', { params: {page: page.value} })
     .then(response => {
-      if (Array.isArray(response.data)) {
-        rows.value = response.data;
+      if (Array.isArray(response.data.content)) {
+        rows.value = response.data.content;
       } else {
         console.error('A resposta da API não é um array:', response.data);
         rows.value = [];
