@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="backStyle">
-    <div class="main">
+    <div class="main radios">
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Locatários
@@ -75,16 +75,52 @@
               <span class="q-ml-sm text-h6">Detalhes do locatário {{ dialogs.view.row.name }}</span>
             </div>
 
-            <div class="q-ml-sm ">
-              <div class="column q-mt-md">
-                <span class="q-ml-sm col"><q-icon name="key"/> Id: {{ renterInfor.id }}</span>
-                <span class="q-ml-sm col"><q-icon name="person"/> Nome: {{ renterInfor.name }}</span>
-                <span class="q-ml-sm col"><q-icon name="email"/> Email: {{ renterInfor.email }}</span>
-                <span class="q-ml-sm col"><q-icon name="phone"/> Telefone: {{ renterInfor.telephone }}</span>
-                <span class="q-ml-sm col"><q-icon name="home"/> Endereço: {{ renterInfor.address }}</span>
-                <span class="q-ml-sm col"><q-icon name="insert_drive_file"/> cpf: {{ renterInfor.cpf }}</span>
+            <div class="q-ml-sm">
+              <div class="row q-mt-md items-center q-gutter-sm">
+
+                <div class="column q-gutter-sm">
+                  <q-input v-model="renterInfor.id" label="Id" filled lazy-rules readonly>
+                  <template v-slot:prepend>
+                    <q-icon name="key" />
+                  </template>
+                  </q-input>
+
+                  <q-input v-model="renterInfor.name" label="Nome" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="person" />
+                    </template>
+                  </q-input>
+
+                  <q-input v-model="renterInfor.email" label="Email" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="email" />
+                    </template>
+                  </q-input>
+                </div>
+
+                <div class="column q-gutter-sm">
+                  <q-input v-model="renterInfor.telephone" label="Telefone" filled lazy-rules readonly>
+                  <template v-slot:prepend>
+                    <q-icon name="phone" />
+                  </template>
+                  </q-input>
+
+                  <q-input v-model="renterInfor.address" label="Endereço" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="home" />
+                    </template>
+                  </q-input>
+
+                  <q-input v-model="renterInfor.cpf" label="CPF" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="insert_drive_file" />
+                    </template>
+                  </q-input>
+                </div>
+
               </div>
             </div>
+
           </q-card-section>
 
           <q-card-actions align="right">

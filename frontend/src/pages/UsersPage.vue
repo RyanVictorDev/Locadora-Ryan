@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="backStyle">
-    <div class="main">
+    <div class="main radios">
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Usuários
@@ -78,12 +78,28 @@
               <span class="q-ml-sm text-h6">Detalhes do usuário {{ dialogs.view.row.name }}</span>
             </div>
 
-            <div class="q-ml-sm ">
-              <div class="column q-mt-md">
-                <span class="q-ml-sm col"><q-icon name="key"/> Id: {{ userInfor.id }}</span>
-                <span class="q-ml-sm col"><q-icon name="person"/> Nome: {{ userInfor.name }}</span>
-                <span class="q-ml-sm col"><q-icon name="insert_drive_file"/> Cargo: {{ userInfor.role }}</span>
+            <div class="q-ml-sm">
+
+              <div class="column q-mt-md items-center q-gutter-sm">
+                  <q-input v-model="userInfor.id" label="Id do usuário" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="badge" />
+                    </template>
+                  </q-input>
+
+                  <q-input v-model="userInfor.name" label="Nome do usuário" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="person" />
+                    </template>
+                  </q-input>
+
+                  <q-input v-model="userInfor.role" label="Cargo do usuário" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="work" />
+                    </template>
+                  </q-input>
               </div>
+
             </div>
           </q-card-section>
 
@@ -138,7 +154,7 @@ onMounted(() => {
   if (role.value === 'USER') {
     icons.value = ['visibility'];
   } else if (role.value === 'ADMIN') {
-    icons.value = ['visibility', 'edit', 'delete'];
+    icons.value = ['visibility', 'edit'];
   }
 });
 
@@ -195,7 +211,7 @@ const prevPage = () => {
   if (page.value > 0) {
     page.value--;
     getRows(srch.value);
-  }   
+  }
 };
 
 const nextPage = () => {

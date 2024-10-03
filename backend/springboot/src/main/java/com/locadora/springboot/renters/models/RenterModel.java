@@ -14,11 +14,23 @@ public class RenterModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(length = 100, nullable = false)
     private String name;
+
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
+
+    @Column(length = 15, nullable = false, unique = true)
     private String telephone;
+
+    @Column(length = 80, nullable = false)
     private String address;
+
+    @Column(length = 14, nullable = false, unique = true)
     private String cpf;
+
+    @Column(nullable = false)
     private boolean isDeleted;
 
     public RenterModel(String name, String email, String telephone, String address, String cpf){

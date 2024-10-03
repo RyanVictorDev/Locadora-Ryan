@@ -23,11 +23,18 @@ public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(length = 100, nullable = false)
     private String name;
+
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
+
+    @Column(length = 60, nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 5, nullable = false)
     private UserRoleEnum role;
 
     public UserModel(String name, String email, String password, UserRoleEnum role){

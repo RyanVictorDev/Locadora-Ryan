@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="backStyle">
-    <div class="main">
+    <div class="main radios">
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Aluguéis

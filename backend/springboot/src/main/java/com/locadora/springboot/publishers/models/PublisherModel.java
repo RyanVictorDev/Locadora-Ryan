@@ -16,10 +16,20 @@ public class PublisherModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(length = 100, nullable = false)
     private String name;
+
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
+
+    @Column(length = 15, nullable = false)
     private String telephone;
+
+    @Column(length = 180)
     private String site;
+
+    @Column(nullable = false)
     private boolean isDeleted;
 
     public PublisherModel(String name, String email, String telephone, String site){

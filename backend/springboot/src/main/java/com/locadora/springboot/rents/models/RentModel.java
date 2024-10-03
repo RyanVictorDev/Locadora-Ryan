@@ -23,20 +23,23 @@ public class RentModel {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "renter_id")
+    @JoinColumn(name = "renter_id", nullable = false)
     private RenterModel renter;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id", nullable = false)
     private BookModel book;
 
     private LocalDate devolutionDate;
 
+    @Column(nullable = false)
     private LocalDate deadLine;
 
+    @Column(nullable = false)
     private LocalDate rentDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 19, nullable = false)
     private RentStatusEnum status;
 
     public RentModel(RenterModel renter, BookModel book, LocalDate deadLine){

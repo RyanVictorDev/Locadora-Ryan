@@ -9,6 +9,7 @@
     row-key="name"
     color="primary"
     rows-per-page-label="Registros por página"
+    class="radios"
   >
     <template v-slot:body-cell-actions="props">
       <q-td :props="props">

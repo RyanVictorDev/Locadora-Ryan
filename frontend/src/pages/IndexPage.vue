@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="backStyle">
-    <div class="main">
+    <div class="main radios">
       <div class="flex justify-evenly">
         <div>
           <chartBarComponent />

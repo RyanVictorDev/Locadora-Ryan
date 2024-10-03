@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="backStyle">
-    <div class="main">
+    <div class="main radios">
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Editoras
@@ -74,15 +74,45 @@
               <span class="q-ml-sm text-h6">Detalhes da editora {{ dialogs.view.row.name }}</span>
             </div>
 
-            <div class="q-ml-sm ">
-              <div class="column q-mt-md">
-                <span class="q-ml-sm col"><q-icon name="key"/> Id: {{ editoraInfor.id }}</span>
-                <span class="q-ml-sm col"><q-icon name="edit"/> Nome: {{ editoraInfor.name }}</span>
-                <span class="q-ml-sm col"><q-icon name="email"/> Email: {{ editoraInfor.email }}</span>
-                <span class="q-ml-sm col"><q-icon name="phone"/> Telefone: {{ editoraInfor.telephone }}</span>
-                <span class="q-ml-sm col"><q-icon name="language"/> Site: {{ editoraInfor.site }}</span>
+            <div class="q-ml-lg">
+              <div class="row q-mt-md items-center q-gutter-sm">
+
+                <div class="column q-gutter-sm">
+                  <q-input v-model="editoraInfor.id" label="Id" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="key" />
+                    </template>
+                  </q-input>
+
+                  <q-input v-model="editoraInfor.name" label="Nome" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="edit" />
+                    </template>
+                  </q-input>
+                </div>
+
+                <div class="column q-gutter-sm">
+                  <q-input v-model="editoraInfor.email" label="Email" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="email" />
+                    </template>
+                  </q-input>
+
+                  <q-input v-model="editoraInfor.telephone" label="Telefone" filled lazy-rules readonly>
+                    <template v-slot:prepend>
+                      <q-icon name="phone" />
+                    </template>
+                  </q-input>
+                </div>
+
+                <q-input class="q-mx-auto" v-model="editoraInfor.site" label="Site" filled lazy-rules readonly>
+                  <template v-slot:prepend>
+                    <q-icon name="language" />
+                  </template>
+                </q-input>
               </div>
             </div>
+
           </q-card-section>
 
           <q-card-actions align="right">
