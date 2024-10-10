@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookModel, Integer> {
-    UserDetails findByName(String name);
+    BookModel findByName(String name);
     List<BookModel> findByPublisherId(int publisherId);
     Page<BookModel> findAllByIsDeletedFalse(Pageable pageable);
 

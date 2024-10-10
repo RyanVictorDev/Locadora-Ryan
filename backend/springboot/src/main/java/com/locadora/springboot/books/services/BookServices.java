@@ -49,6 +49,8 @@ public class BookServices {
                 .orElseThrow(() -> new IllegalArgumentException("Publisher not found"));
         bookValidation.validPublisherExist(data);
 
+        bookValidation.validCreateBook(data);
+
         BookModel newBook = new BookModel(data.name(), data.author(), data.launchDate(), data.totalQuantity(), publisher);
         bookRepository.save(newBook);
 

@@ -1,6 +1,7 @@
 <template>
   <q-table
-    flat bordered
+    flat
+    bordered
     table-header-style="background-color: #105352; color: #fff"
     separator="cell"
     :title="title"
@@ -13,14 +14,18 @@
   >
     <template v-slot:body-cell-actions="props">
       <q-td :props="props">
-        <q-btn
-          v-for="icon in icons"
-          :key="icon"
-          flat
-          round
-          :icon="icon"
-          @click="handleAction(props.row, icon)"
-        />
+        <div v-if="!['DELIVERED_WITH_DELAY', 'IN_TIME'].includes(props.row.status)">
+          <div v-if="!['admin@gmail.com'].includes(props.row.email)">
+            <q-btn
+              v-for="icon in icons"
+              :key="icon"
+              flat
+              round
+              :icon="icon"
+              @click="handleAction(props.row, icon)"
+            />
+          </div>
+        </div>
       </q-td>
     </template>
   </q-table>

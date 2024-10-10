@@ -2,6 +2,7 @@ package com.locadora.springboot.books.validations;
 
 import com.locadora.springboot.books.DTOs.CreateBookRequestDTO;
 import com.locadora.springboot.books.DTOs.UpdateBookRecordDTO;
+import com.locadora.springboot.books.models.BookModel;
 import com.locadora.springboot.books.repositories.BookRepository;
 import com.locadora.springboot.exceptions.CustomValidationException;
 import com.locadora.springboot.publishers.models.PublisherModel;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Component
@@ -63,6 +65,15 @@ public class BookValidation {
         boolean hasActiveRent = rentRepository.existsByBookIdAndStatus(id, RentStatusEnum.RENTED);
         if (hasActiveRent) {
             throw new CustomValidationException("The book cannot be deleted because it has an active rental.");
+        }
+    }
+
+    public void validCreateBook(CreateBookRequestDTO data){
+        BookModel book = bookRepository.findByName(data.name());
+        if (book != null){
+            if (Objects.equals(data.name(), book.getName()) && Objects.equals(data.author(), book.getAuthor()) && Objects.equals(data.publisherId(), book.getPublisher().getId())){
+                throw new CustomValidationException("This book is already registered.");
+            }
         }
     }
 }

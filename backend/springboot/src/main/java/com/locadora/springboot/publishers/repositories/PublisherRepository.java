@@ -19,8 +19,11 @@ public interface PublisherRepository extends JpaRepository<PublisherModel, Integ
     Page<PublisherModel> findAllByIsDeletedFalse(Pageable pageable);
     List<PublisherModel> findAllByIsDeletedFalse(Sort sort);
     PublisherModel findByEmail(String email);
+    PublisherModel findByEmailAndIsDeletedFalse(String email);
     PublisherModel findBySite(String site);
+    PublisherModel findBySiteAndIsDeletedFalse(String site);
     PublisherModel findByTelephone(String telephone);
+    PublisherModel findByTelephoneAndIsDeletedFalse(String telephone);
 
     @Query("SELECT u FROM PublisherModel u WHERE LOWER(REPLACE(u.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:name, ' ', ''), '%'))")
     List<PublisherModel> findAllByName(@Param("name") String name, Sort sort);

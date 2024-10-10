@@ -16,7 +16,9 @@ import java.util.List;
 public interface RenterRepository extends JpaRepository<RenterModel, Integer> {
     UserDetails findByName(String name);
     RenterModel findByEmail(String email);
+    RenterModel findByEmailAndIsDeletedFalse(String email);
     RenterModel findByCpf(String cpf);
+    RenterModel findByCpfAndIsDeletedFalse(String cpf);
     Page<RenterModel> findAllByIsDeletedFalse(Pageable pageable);
     List<RenterModel> findAllByIsDeletedFalse(Sort sort);
     List<RenterModel> findAllByEmail(String email);

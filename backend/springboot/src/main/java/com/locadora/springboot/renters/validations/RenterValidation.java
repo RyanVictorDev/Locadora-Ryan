@@ -27,7 +27,7 @@ public class RenterValidation {
     private RentRepository rentRepository;
 
     public void validateEmail(CreateRenterRequestDTO data){
-        if (renterRepository.findByEmail(data.email()) != null){
+        if (renterRepository.findByEmailAndIsDeletedFalse(data.email()) != null){
             throw new CustomValidationException("Email alredy in use.");
         }
     }
@@ -36,7 +36,7 @@ public class RenterValidation {
         RenterModel renter = renterRepository.findById(id).get();
 
         if (!Objects.equals(renter.getEmail(), data.email())){
-            if (renterRepository.findByEmail(data.email()) != null) {
+            if (renterRepository.findByEmailAndIsDeletedFalse(data.email()) != null) {
                 throw new CustomValidationException("Email alredy in use.");
             }
         }
@@ -51,7 +51,7 @@ public class RenterValidation {
                 throw new CustomValidationException("Invalid CPF format.");
             }
 
-            if (renterRepository.findByCpf(data.cpf()) != null) {
+            if (renterRepository.findByCpfAndIsDeletedFalse(data.cpf()) != null) {
                 throw new CustomValidationException("CPF alredy in use.");
             }
         }
@@ -69,7 +69,7 @@ public class RenterValidation {
                     throw new CustomValidationException("Invalid CPF format.");
                 }
 
-                if (renterRepository.findByCpf(data.cpf()) != null) {
+                if (renterRepository.findByCpfAndIsDeletedFalse(data.cpf()) != null) {
                     throw new CustomValidationException("CPF alredy in use.");
                 }
             }

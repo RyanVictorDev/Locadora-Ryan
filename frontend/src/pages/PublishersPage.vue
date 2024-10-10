@@ -4,7 +4,7 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Editoras
-          <q-btn push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
         </div>
 
         <q-form @submit="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
@@ -178,6 +178,7 @@ onMounted(() => {
     icons.value = ['visibility'];
   } else if (role.value === 'ADMIN') {
     icons.value = ['visibility', 'edit', 'delete'];
+    isAdmin.value = true;
   }
 });
 
@@ -280,6 +281,7 @@ const dialogs = ref({
 });
 
 const role = ref(localStorage.getItem('role'))
+const isAdmin = ref(false);
 const icons = ref({});
 
 const handleAction = ({ row, icon }) => {

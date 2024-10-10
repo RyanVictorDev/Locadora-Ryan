@@ -107,6 +107,10 @@ public class RentServices {
         rentValidation.deliveredValidate(id);
         rentValidation.setRentStatus(rent);
 
+        Optional<BookModel> book = bookRepository.findById(rent.getBook().getId());
+        book.get().setTotalQuantity(book.get().getTotalQuantity() + 1);
+        bookRepository.save(book.get());
+
         rentRepository.save(rent);
         return ResponseEntity.status(HttpStatus.OK).body(rent);
     }
@@ -121,7 +125,7 @@ public class RentServices {
         rentValidation.validateBookIdUpdate(updateRentRecordDTO);
         BookModel book = bookRepository.findById(updateRentRecordDTO.bookId()).get();
 
-        rentValidation.validateDeadLineUpdate(updateRentRecordDTO, id);
+//        rentValidation.validateDeadLineUpdate(updateRentRecordDTO, id);
         rentValidation.validateBookTotalQuantity(book);
 
         RentModel rentModel = rentOptional.get();
@@ -129,7 +133,7 @@ public class RentServices {
         rentModel.setRenter(renter);
         rentModel.setDeadLine(updateRentRecordDTO.deadLine());
 
-        rentRepository.save(rentModel);                                 
+        rentRepository.save(rentModel);
 
         return ResponseEntity.status(HttpStatus.OK).body("Rent updated successfully");
     }

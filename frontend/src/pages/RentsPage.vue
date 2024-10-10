@@ -66,7 +66,7 @@
           <q-card-section>
             <q-form @submit.prevent="editAction(dialogs.edit.row.id, rentToEdit)" class="q-gutter-md q-my-auto">
               <q-input v-model="dialogs.edit.row.book.name" label="Título do livro" filled lazy-rules readonly/>
-              <q-input v-model="rentToEdit.renterId" label="ID do locatário" filled lazy-rules readonly/>
+              <q-input v-model="rentToEdit.renterName" label="ID do locatário" filled lazy-rules readonly/>
               <q-input v-model="rentToEdit.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules/>
 
               <q-select
@@ -80,6 +80,7 @@
                 option-label="name"
                 @filter="rentersFilter"
                 @update:model-value="onItemClickEdit(selectedRenter, rentToEdit)"
+                label="Novo locatário"
               >
                 <template v-slot:no-option>
                   <q-item>
@@ -242,6 +243,7 @@ const handleAction = ({ row, icon }) => {
     rentToEdit.value.bookId = row.book.id;
     rentToEdit.value.renterId = row.renter.id;
     rentToEdit.value.deadLine = row.deadLine;
+    rentToEdit.value.renterName = row.renter.name;
     dialogs.value.edit.visible = true;
   }
 };
@@ -290,10 +292,12 @@ const rentToEdit = ref({
   renterId: '',
   bookId: '',
   deadLine: '',
+  renterName: ''
 });
 
 const onItemClickEdit = (renterItem, rentToEdit) => {
   rentToEdit.renterId = renterItem.id;
+  rentToEdit.renterName = renterItem.name;
 }
 
 const editRent = (id, rentToEdit) => {
@@ -305,8 +309,12 @@ const editRent = (id, rentToEdit) => {
     getRows();
   })
   .catch(error => {
+    if (error.response.status == 403) {
+        showNotification('negative', "Você não tem permissao!");
+    }else {
+      showNotification('negative', error.response.data.error);
+    }
     console.log("Erro ao editar aluguel", error);
-    showNotification('negative', "Erro ao atualizar aluguel!");
   });
 };
 

@@ -37,14 +37,14 @@ public class PublisherValidation {
         PublisherModel publisher = publisherRepository.findById(id).get();
 
         if (!Objects.equals(publisher.getName(), data.name())){
-            if (publisherRepository.findByName(data.name())!= null){
+            if (publisherRepository.findByNameAndIsDeletedFalse(data.name())!= null){
                 throw new CustomValidationException("Name alredy in use.");
             }
         }
     }
 
     public void validEmail(CreatePublisherRequestDTO data){
-        if (publisherRepository.findByEmail(data.email()) != null){
+        if (publisherRepository.findByEmailAndIsDeletedFalse(data.email()) != null){
             throw new CustomValidationException("Email alredy in use.");
         }
     }
@@ -53,14 +53,14 @@ public class PublisherValidation {
         PublisherModel publisher = publisherRepository.findById(id).get();
 
         if (!Objects.equals(publisher.getEmail(), data.email())){
-            if (publisherRepository.findByEmail(data.email()) != null){
+            if (publisherRepository.findByEmailAndIsDeletedFalse(data.email()) != null){
                 throw new CustomValidationException("Email alredy in use.");
             }
         }
     }
 
     public void validTelephone(CreatePublisherRequestDTO data){
-        if (publisherRepository.findByTelephone(data.telephone())!= null){
+        if (publisherRepository.findByTelephoneAndIsDeletedFalse(data.telephone())!= null){
             throw new CustomValidationException("This telephone is alredy in use.");
         }
     }
@@ -69,7 +69,7 @@ public class PublisherValidation {
         PublisherModel publisher = publisherRepository.findById(id).get();
 
         if (!Objects.equals(publisher.getTelephone(), data.telephone())){
-            if (publisherRepository.findByTelephone(data.telephone())!= null){
+            if (publisherRepository.findByTelephoneAndIsDeletedFalse(data.telephone())!= null){
                 throw new CustomValidationException("This telephone is alredy in use.");
             }
         }
@@ -77,7 +77,7 @@ public class PublisherValidation {
 
     public void validSite(CreatePublisherRequestDTO data){
         if (!Objects.equals(data.site(), "")){
-            if (publisherRepository.findBySite(data.site()) != null){
+            if (publisherRepository.findBySiteAndIsDeletedFalse(data.site()) != null){
                 throw new CustomValidationException("This site is already in use");
             }
         }
@@ -88,7 +88,7 @@ public class PublisherValidation {
 
         if (!Objects.equals(data.site(), "")) {
             if (!Objects.equals(publisher.getSite(), data.site())){
-                if (publisherRepository.findBySite(data.site()) != null) {
+                if (publisherRepository.findBySiteAndIsDeletedFalse(data.site()) != null) {
                     throw new CustomValidationException("This site is already in use");
                 }
             }

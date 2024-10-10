@@ -39,7 +39,7 @@ public class RentModel {
     private LocalDate rentDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 19, nullable = false)
+    @Column(length = 25, nullable = false)
     private RentStatusEnum status;
 
     public RentModel(RenterModel renter, BookModel book, LocalDate deadLine){

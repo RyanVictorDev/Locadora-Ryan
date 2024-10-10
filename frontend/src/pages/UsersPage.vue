@@ -4,7 +4,7 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Usuários
-          <q-btn push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
         </div>
 
         <q-form @submit="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
@@ -57,8 +57,8 @@
               <q-input v-model="userToCreate.password" label="Senha" type="password" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
 
               <div class="q-gutter-sm q-px-auto">
-                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ADMIN" label="Editor" />
-                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="USER" label="Leitor" />
+                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ADMIN" label="Editor" :rules="[val => !!val || 'Por favor, selecione uma função']"/>
+                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="USER" label="Leitor" :rules="[val => !!val || 'Por favor, selecione uma função']"/>
               </div>
 
               <q-card-actions align="right">
@@ -155,6 +155,7 @@ onMounted(() => {
     icons.value = ['visibility'];
   } else if (role.value === 'ADMIN') {
     icons.value = ['visibility', 'edit'];
+    isAdmin.value = true;
   }
 });
 
@@ -219,7 +220,6 @@ const nextPage = () => {
   getRows(srch.value);
 };
 
-
 const getRows = (srch = '') => {
   api.get('/user', { params: { search: srch, page: page.value } })
     .then(response => {
@@ -259,6 +259,7 @@ const dialogs = ref({
 });
 
 const role = ref(localStorage.getItem('role'))
+const isAdmin = ref(false);
 const icons = ref({});
 
 const handleAction = ({ row, icon }) => {
@@ -269,7 +270,7 @@ const handleAction = ({ row, icon }) => {
     dialogs.value.view.row = row;
     dialogs.value.view.visible = true;
     showMore(row.id);
-  } else if (icon === 'edit') {
+  } else if (icon === 'edit' && row.id !== 1) {
     dialogs.value.edit.row = row;
     dialogs.value.edit.visible = true;
     showMore(row.id);
@@ -298,11 +299,13 @@ const createRow = (userToCreate) => {
     .catch(error => {
       if (error.response.status == 403) {
         showNotification('negative', "Você não tem permissao!");
+      } if (userToCreate.role == ''){
+        showNotification('negative', "Adicione uma permissão");
       } else {
         showNotification('negative', error.response.data.error);
       }
 
-      console.log("Erro ao criar usuário", error.response.status);
+      console.log("Erro ao criar usuário", error.response.error);
     });
 };
 

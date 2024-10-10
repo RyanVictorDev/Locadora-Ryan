@@ -4,7 +4,7 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Livros
-          <q-btn push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
         </div>
 
         <q-form @submit="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
@@ -68,6 +68,7 @@
                 option-label="name"
                 @filter="publishersFilter"
                 @update:model-value="onItemClickRegister(selectedPublisher, bookToCreate)"
+                label="Nova Editora"
               >
                 <template v-slot:no-option>
                   <q-item>
@@ -103,7 +104,6 @@
               <q-select
                 filled
                 v-model="selectedRenter"
-
                 use-input
                 hide-selected
                 fill-input
@@ -112,6 +112,7 @@
                 option-label="name"
                 @filter="rentersFilter"
                 @update:model-value="onItemClickRent"
+                label="Locatário"
               >
                 <template v-slot:no-option>
                   <q-item>
@@ -159,6 +160,7 @@
                 option-label="name"
                 @filter="publishersFilter"
                 @update:model-value="onItemClickEdit(selectedPublisher, bookInforEdit)"
+                label="Nova editora"
               >
                 <template v-slot:no-option>
                   <q-item>
@@ -211,9 +213,10 @@ onMounted(() => {
     getRents();
 
   if (role.value === 'USER') {
-    icons.value = ['visibility'];
+    icons.value = [];
   } else if (role.value === 'ADMIN') {
     icons.value = ['bookmark', 'edit', 'delete'];
+    isAdmin.value = true;
   }
 });
 
@@ -316,7 +319,8 @@ const dialogs = ref({
   }
 });
 
-const role = ref(localStorage.getItem('role'))
+const role = ref(localStorage.getItem('role'));
+const isAdmin = ref(false);
 const icons = ref({});
 
 const handleAction = ({ row, icon }) => {
@@ -362,7 +366,7 @@ const createRow = (bookToCreate) => {
     })
     .catch(error => {
       if (error.response.status == 403) {
-        showNotification('negative', "Você não tem permissao!");
+        showNotification('negative', "Livro já registrado!");
       } else {
         showNotification('negative', error.response.data.error);
       }
