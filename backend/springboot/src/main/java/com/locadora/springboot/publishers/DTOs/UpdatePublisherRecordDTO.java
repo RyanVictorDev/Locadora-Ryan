@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.URL;
 
 public record UpdatePublisherRecordDTO(
-        @NotBlank(message = "The name cannot be empty") String name,
-        @NotBlank(message = "The email cannot be empty") @Email(message = "Invalid email.")  String email,
-        @NotNull String telephone,
-        @URL(message = "Invalid URL") String site) {
+        @NotBlank(message = "O nome não pode estar vazio.") String name,
+        @NotBlank(message = "O email não pode estar vazio.") @Email(message = "Email inválido.")  String email,
+        @NotNull(message = "O telefone não pode estar vazio.") String telephone,
+        @URL(message = "URL inválida.") String site) {
 }

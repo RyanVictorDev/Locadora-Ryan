@@ -18,6 +18,29 @@
             </template>
           </q-input>
         </q-form>
+
+
+        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list">
+          <q-list>
+            <q-item clickable v-close-popup @click="permissionFilter('ADMIN')">
+              <q-item-section>
+                <q-item-label>Editor</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="permissionFilter('USER')">
+              <q-item-section>
+                <q-item-label>Leitor</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="permissionFilter('')">
+              <q-item-section>
+                <q-item-label>Todos</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
 
       <TableComponent
@@ -203,6 +226,7 @@ const sortedRows = computed(() => {
 const rows = ref([]);
 
 const srch = ref('');
+const roleFilter = ref('')
 const sortBy = ref('');
 const sortDesc = ref(false);
 
@@ -220,8 +244,14 @@ const nextPage = () => {
   getRows(srch.value);
 };
 
-const getRows = (srch = '') => {
-  api.get('/user', { params: { search: srch, page: page.value } })
+const permissionFilter = (permission) => {
+  console.log(permission);
+  roleFilter.value = permission;
+  getRows();
+}
+
+const getRows = (srch = '', role = roleFilter.value) => {
+  api.get('/user', { params: { search: srch, page: page.value, role: role } })
     .then(response => {
       rows.value = response.data.content;
       console.log(response.data)

@@ -68,7 +68,8 @@
                 option-label="name"
                 @filter="publishersFilter"
                 @update:model-value="onItemClickRegister(selectedPublisher, bookToCreate)"
-                label="Nova Editora"
+                label="Editora"
+                aria-required="true"
               >
                 <template v-slot:no-option>
                   <q-item>
@@ -232,7 +233,6 @@ const showNotification = (type, msg) => {
 };
 
 const columns = [
-  { name: 'id', align: 'center', label: 'Id', field: 'id', sortable: true},
   { name: 'title', required: true, label: 'Título', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true},
   { name: 'author', align: 'center', label: 'Autor', field: 'author', sortable: true},
   { name: 'totalQuantity', align: 'center', label: 'Disponíveis', field: 'totalQuantity', sortable: true},
@@ -366,9 +366,15 @@ const createRow = (bookToCreate) => {
     })
     .catch(error => {
       if (error.response.status == 403) {
-        showNotification('negative', "Livro já registrado!");
+        showNotification('negative', "Selecione a editora!");
       } else {
-        showNotification('negative', error.response.data.error);
+        const errors = error.response.data;
+
+        for (const [field, message] of Object.entries(errors)) {
+
+          showNotification('negative', message);
+
+        }
       }
 
       console.log("Erro ao criar livro", error.response.data.error);

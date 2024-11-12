@@ -30,83 +30,97 @@ public class RentValidation {
     @Autowired
     RentRepository rentRepository;
 
-    public void validateRenterId(CreateRentRequestDTO data){
+    public void create(CreateRentRequestDTO data){
+        validateRenterId(data);
+        validateRentRepeated(data);
+        validateRentLate(data);
+        validateBookId(data);
+        validateDeadLine(data);
+    }
+
+    public void update(UpdateRentRecordDTO data, int id){
+        validateRenterIdUpdate(data);
+        validateBookIdUpdate(data);
+        validateDeadLineUpdate(data, id);
+    }
+
+    private void validateRenterId(CreateRentRequestDTO data){
         if (renterRepository.findById(data.renterId()).isEmpty()){
-            throw new CustomValidationException("Renter not found");
+            throw new CustomValidationException("Locatário não encontrado");
         }
 
         RenterModel renter = renterRepository.findById(data.renterId()).get();
 
         if (renter.isDeleted()){
-            throw new CustomValidationException("Renter not found");
+            throw new CustomValidationException("Locatário não encontrado");
         }
     }
 
-    public void validateRenterIdUpdate(UpdateRentRecordDTO data){
+    private void validateRenterIdUpdate(UpdateRentRecordDTO data){
         if (renterRepository.findById(data.renterId()).isEmpty()){
-            throw new CustomValidationException("Renter not found");
+            throw new CustomValidationException("Locatário não encontrado");
         }
     }
 
-    public void validateBookId(CreateRentRequestDTO data){
+    private void validateBookId(CreateRentRequestDTO data){
         if (bookRepository.findById(data.bookId()).isEmpty()){
-            throw new CustomValidationException("Book not found");
+            throw new CustomValidationException("Livro não encontrado");
         }
 
         BookModel book = bookRepository.findById(data.bookId()).get();
 
         if (book.isDeleted()){
-            throw new CustomValidationException("Book not found");
+            throw new CustomValidationException("Livro não encontrado");
         }
     }
 
-    public void validateBookIdUpdate(UpdateRentRecordDTO data){
+    private void validateBookIdUpdate(UpdateRentRecordDTO data){
         if (bookRepository.findById(data.bookId()).isEmpty()){
-            throw new CustomValidationException("Book not found");
+            throw new CustomValidationException("Livro não encontrado");
         }
     }
 
-    public void validateDeadLine(CreateRentRequestDTO data){
+    private void validateDeadLine(CreateRentRequestDTO data){
         if (data.deadLine().isAfter(LocalDate.now().plusDays(30))){
-            throw new CustomValidationException("Deadline cannot be more 30 days.");
+            throw new CustomValidationException("Devolução não pode ser mais de 30 dias.");
         } else if (data.deadLine().isBefore(LocalDate.now())) {
-            throw new CustomValidationException("The deadline cannot be in the past.");
+            throw new CustomValidationException("Devolução não pode ser no passado.");
         }
     }
 
-    public void validateDeadLineUpdate(UpdateRentRecordDTO data, int id) {
+    private void validateDeadLineUpdate(UpdateRentRecordDTO data, int id) {
         RentModel rentPass = rentRepository.findById(id).get();
         if (!Objects.equals(rentPass.getDeadLine(), data.deadLine())){
             if (data.deadLine().isAfter(LocalDate.now().plusDays(30))) {
-                throw new CustomValidationException("Deadline cannot be more than 30 days from today.");
+                throw new CustomValidationException("Devolução não pode ser mais de 30 dias.");
             } else if (data.deadLine().isBefore(LocalDate.now())) {
-                throw new CustomValidationException("The deadline cannot be in the past.");
+                throw new CustomValidationException("Devolução não pode ser no passado.");
             }
         }
     }
 
     public void validateBookTotalQuantity(BookModel data){
         if (data.getTotalQuantity() <= 0){
-            throw new CustomValidationException("There are no books available");
+            throw new CustomValidationException("Não existem livros disponíveis");
         }
     }
 
-    public void validateRentRepeated(CreateRentRequestDTO data){
+    private void validateRentRepeated(CreateRentRequestDTO data){
         if (rentRepository.existsByRenterIdAndBookIdAndStatus(data.renterId(), data.bookId(), RentStatusEnum.RENTED)){
-            throw new CustomValidationException("Renter already has this book rented.");
+            throw new CustomValidationException("O locatário já alugou este livro.");
         }
     }
 
-    public void validateRentLate(CreateRentRequestDTO data){
+    private void validateRentLate(CreateRentRequestDTO data){
         if (rentRepository.existsByRenterIdAndStatus(data.renterId(), RentStatusEnum.LATE)){
-            throw new CustomValidationException("Renter has late rent.");
+            throw new CustomValidationException("Locatário está com aluguel atrasado.");
         }
     }
 
     public void deliveredValidate(int id){
         RentModel rent = rentRepository.findById(id).get();
         if (rent.getStatus() == RentStatusEnum.DELIVERED || rent.getStatus() == RentStatusEnum.DELIVERED_WITH_DELAY || rent.getStatus() == RentStatusEnum.IN_TIME){
-            throw new CustomValidationException("Rent is already refunded");
+            throw new CustomValidationException("O aluguel já foi reembolsado");
         }
     }
 

@@ -4,6 +4,7 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Aluguéis
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
         </div>
         <q-form @submit.prevent="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
           <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%">
@@ -16,6 +17,40 @@
             </template>
           </q-input>
         </q-form>
+
+        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list">
+          <q-list>
+            <q-item clickable v-close-popup @click="statusFilter('RENTED')">
+              <q-item-section>
+                <q-item-label>Alugados</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="statusFilter('LATE')">
+              <q-item-section>
+                <q-item-label>Atrasados</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="statusFilter('IN_TIME')">
+              <q-item-section>
+                <q-item-label>Devolvido no prazo</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="statusFilter('DELIVERED_WITH_DELAY')">
+              <q-item-section>
+                <q-item-label>Devolvido fora prazo</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="statusFilter('')">
+              <q-item-section>
+                <q-item-label>Todos</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
 
       <TableComponent
@@ -41,6 +76,73 @@
         />
       </div>
 
+      <q-dialog v-model="dialogs.register.visible" persistent>
+        <q-card class="radios">
+          <q-card-section class="row items-center">
+            <q-avatar icon="bookmark" color="blue" text-color="white"/>
+            <span class="q-ml-sm text-h6">Alugar o livro</span>
+          </q-card-section>
+
+          <q-card-section>
+            <q-form @submit.prevent="rentAction()" class="q-gutter-md q-my-auto">
+              <q-input v-model="bookToRent.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules :min="today" :max="maxReturnDate" required="true"/>
+
+              <q-select
+                filled
+                v-model="selectedRenter"
+                use-input
+                hide-selected
+                fill-input
+                input-debounce="0"
+                :options="renters"
+                option-label="name"
+                @filter="rentersFilter"
+                @update:model-value="onItemClickRent"
+                label="Locatário"
+                required="true"
+              >
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No results
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+
+              <q-select
+                filled
+                v-model="selectedBook"
+                use-input
+                hide-selected
+                fill-input
+                input-debounce="0"
+                :options="books"
+                option-label="name"
+                @filter="booksFilter"
+                @update:model-value="onItemClickBook"
+                label="Livro"
+                required="true"
+              >
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No results
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+
+              <!-- <p>id do locatário: <span class="text-bold">{{ renterId }}</span></p> -->
+
+              <q-card-actions align="right">
+                <q-btn flat label="Cancelar" color="primary" @click="dialogs.register.visible = false"/>
+                <q-btn flat label="Salvar" type="submit" color="primary"/>
+              </q-card-actions>
+            </q-form>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
 
       <q-dialog v-model="dialogs.rent.visible" persistent>
         <q-card class="radios">
@@ -121,10 +223,12 @@ onMounted(() => {
      icons.value = [];
    } else if (role.value === 'ADMIN') {
       icons.value = ['bookmark_border', 'edit'];
+      isAdmin.value = true;
     }
 });
 
 const srch = ref('');
+const statusFiltered = ref('');
 
 const $q = useQuasar();
 
@@ -188,8 +292,14 @@ const nextPage = () => {
   getRows(srch.value);
 };
 
-const getRows = (srch = '') => {
-  api.get('/rent', { params: { search: srch, page: page.value } })
+const statusFilter = (rentStatus) => {
+  console.log(rentStatus);
+  statusFiltered.value = rentStatus;
+  getRows();
+}
+
+const getRows = (srch = '', status = statusFiltered.value) => {
+  api.get('/rent', { params: { search: srch, page: page.value, status: status } })
     .then(response => {
       if (Array.isArray(response.data.content)) {
         rows.value = response.data.content;
@@ -221,6 +331,10 @@ const traduzirStatus = (status) => {
 };
 
 const dialogs = ref({
+  register: {
+    visible: false,
+    row: null
+  },
   rent: {
     visible: false,
     row: null
@@ -232,6 +346,7 @@ const dialogs = ref({
 });
 
 const role = ref(localStorage.getItem('role'))
+const isAdmin = ref(false);
 const icons = ref({});
 
 const handleAction = ({ row, icon }) => {
@@ -248,6 +363,39 @@ const handleAction = ({ row, icon }) => {
   }
 };
 
+const openRegisterDialog = () => {
+  dialogs.value.register.visible = true;
+};
+
+const rentBook = () => {
+  api.post('/rent', bookToRent.value)
+    .then(response => {
+      console.log("Sucesso ao alugar livro", response);
+      dialogs.value.register.visible = false;
+      showNotification('positive', "Sucesso ao alugar livro!");
+      getRows();
+    })
+    .catch(error => {
+      if (error.response.status == 403) {
+        showNotification('negative', "Você não tem permissao!");
+      } else {
+        const errors = error.response.data;
+
+        for (const [field, message] of Object.entries(errors)) {
+
+          showNotification('negative', message);
+
+        }
+      }
+
+      console.log("Erro ao alugar livro", error);
+    });
+};
+
+const rentAction = () => {
+  rentBook(bookToRent.value);
+};
+
 const deliveryBook = (id) => {
   api.put('/rent/' + id)
     .then(response => {
@@ -261,8 +409,13 @@ const deliveryBook = (id) => {
         console.log("Erro ao editar", error)
         showNotification('negative', "Livro já devolvido!");
       } else {
-        console.log("Erro ao editar", error)
-        showNotification('negative', "Erro ao devolver!");
+        const errors = error.response.data;
+
+        for (const [field, message] of Object.entries(errors)) {
+
+          showNotification('negative', message);
+
+        }
       }
     });
 };
@@ -285,7 +438,7 @@ const getRenters = (srch = '') => {
 };
 
 const onItemClickRent = (renterItem) => {
-  rentToEdit.value.renterId = renterItem.id;
+  bookToRent.value.renterId = renterItem.id;
 };
 
 const rentToEdit = ref({
@@ -294,6 +447,10 @@ const rentToEdit = ref({
   deadLine: '',
   renterName: ''
 });
+
+const idRenter = ref('')
+const idBook = ref('')
+
 
 const onItemClickEdit = (renterItem, rentToEdit) => {
   rentToEdit.renterId = renterItem.id;
@@ -337,6 +494,50 @@ const rentersFilter = (val, update, abort) => {
     });
   }
 };
+
+const books = ref([]);
+
+const getBooks = (srch = '') => {
+  api.get('/book', { params: { search: srch, page: page.value } })
+    .then(response => {
+      if (Array.isArray(response.data.content)) {
+        books.value = response.data.content;
+        console.log(response.data)
+      } else {
+        console.error('A resposta da API não é um array:', response.data);
+        rows.value = [];
+      }
+    })
+    .catch(error => {
+      console.error("Erro ao obter dados:", error);
+    });
+};
+
+const booksFilter = (val, update, abort) => {
+  if (val === '') {
+    update(() => {
+      getBooks();
+    });
+  } else {
+    update(() => {
+      const needle = val.toLowerCase();
+      books.value = books.value.filter(book =>
+        book.name.toLowerCase().includes(needle)
+      );
+    });
+  }
+};
+
+const onItemClickBook = (bookItem) => {
+  bookToRent.value.bookId = bookItem.id;
+};
+
+const bookToRent = ref({
+  renterId: idRenter,
+  bookId: idBook,
+  deadLine: 'Escolha uma data',
+});
+
 </script>
 
 <style scoped>

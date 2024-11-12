@@ -42,14 +42,10 @@ public class BookServices {
 
     public ResponseEntity<Void> create(@Valid CreateBookRequestDTO data) {
 
-        bookValidation.validLaunchDate(data);
-        bookValidation.validTotalQuantity(data);
+        bookValidation.create(data);
 
         PublisherModel publisher = publisherRepository.findById(data.publisherId())
-                .orElseThrow(() -> new IllegalArgumentException("Publisher not found"));
-        bookValidation.validPublisherExist(data);
-
-        bookValidation.validCreateBook(data);
+                .orElseThrow(() -> new IllegalArgumentException("Editora não encontrada."));
 
         BookModel newBook = new BookModel(data.name(), data.author(), data.launchDate(), data.totalQuantity(), publisher);
         bookRepository.save(newBook);
@@ -84,13 +80,12 @@ public class BookServices {
 
     public ResponseEntity<Object> update(int id, @Valid UpdateBookRecordDTO updateBookRecordDTO){
         Optional<BookModel> response = bookRepository.findById(id);
-        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
+        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado.");
 
-        bookValidation.validTotalQuantityUpdate(updateBookRecordDTO);
-        bookValidation.validLaunchDateUpdate(updateBookRecordDTO);
+        bookValidation.update(updateBookRecordDTO);
 
         PublisherModel publisher = publisherRepository.findById(updateBookRecordDTO.publisherId())
-                .orElseThrow(() -> new IllegalArgumentException("Publisher not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Editora não encontrada."));
 
         var bookModel = response.get();
         bookModel.setName(updateBookRecordDTO.name());
@@ -105,7 +100,7 @@ public class BookServices {
 
     public ResponseEntity<Object> delete(int id){
         Optional<BookModel> response = bookRepository.findById(id);
-        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
+        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado.");
 
         bookValidation.validDeleteBook(id);
 
@@ -115,6 +110,6 @@ public class BookServices {
 
         bookRepository.save(book);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Book deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Livro excluído com sucesso.");
     }
 }

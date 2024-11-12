@@ -31,8 +31,7 @@ public class RenterServices {
     private RenterValidation renterValidation;
 
     public ResponseEntity<Void> create(@Valid CreateRenterRequestDTO data){
-        renterValidation.validateEmail(data);
-        renterValidation.validateCPF(data);
+        renterValidation.create(data);
 
         RenterModel newRenter = new RenterModel(data.name(), data.email(), data.telephone(), data.address(), data.cpf());
         renterRepository.save(newRenter);
@@ -67,10 +66,9 @@ public class RenterServices {
 
     public ResponseEntity<Object> update(int id, @Valid UpdateRenterRequestDTO updateRenterRequestDTO){
         Optional<RenterModel> response = renterRepository.findById(id);
-        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Renter not found");
+        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Locatário não encontrado.");
 
-        renterValidation.validateUpdateEmail(updateRenterRequestDTO, id);
-        renterValidation.validateCPFUpdate(updateRenterRequestDTO, id);
+        renterValidation.update(updateRenterRequestDTO, id);
 
         RenterModel renterModel = response.get();
         BeanUtils.copyProperties(updateRenterRequestDTO, renterModel);
@@ -80,7 +78,7 @@ public class RenterServices {
 
     public ResponseEntity<Object> delete(int id){
         Optional<RenterModel> response = renterRepository.findById(id);
-        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Renter not found");
+        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Locatário não encontrado.");
 
         renterValidation.validateDeleteRenter(id);
 
@@ -90,6 +88,6 @@ public class RenterServices {
 
         renterRepository.save(renter);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Renter deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Locatário excluído com sucesso.");
     }
 }

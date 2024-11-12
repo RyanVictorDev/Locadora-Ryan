@@ -32,10 +32,7 @@ public class PublisherServices {
 
     public ResponseEntity<Void> create(@Valid CreatePublisherRequestDTO data) {
 
-        publisherValidation.validName(data);
-        publisherValidation.validEmail(data);
-        publisherValidation.validTelephone(data);
-        publisherValidation.validSite(data);
+        publisherValidation.create(data);
 
         PublisherModel newPublisher = new PublisherModel(data.name(), data.email(), data.telephone(), data.site());
         publisherRepository.save(newPublisher);
@@ -70,12 +67,9 @@ public class PublisherServices {
 
     public ResponseEntity<Object> update(int id, @Valid UpdatePublisherRecordDTO updatePublisherRecordDTO){
         Optional<PublisherModel> response = publisherRepository.findById(id);
-        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Publisher not found");
+        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Editora não encontrada.");
 
-        publisherValidation.validNameUpdate(updatePublisherRecordDTO, id);
-        publisherValidation.validEmailUpdate(updatePublisherRecordDTO, id);
-        publisherValidation.validTelephoneUpdate(updatePublisherRecordDTO, id);
-        publisherValidation.validSiteUpdate(updatePublisherRecordDTO, id);
+        publisherValidation.update(updatePublisherRecordDTO, id);
 
         var publisherModel = response.get();
         BeanUtils.copyProperties(updatePublisherRecordDTO, publisherModel);
@@ -85,7 +79,7 @@ public class PublisherServices {
 
     public ResponseEntity<Object> delete(int id){
         Optional<PublisherModel> response = publisherRepository.findById(id);
-        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Publisher not found");
+        if (response.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Editora não encontrada.");
 
         publisherValidation.validDeletePublisher(id);
 
@@ -95,6 +89,6 @@ public class PublisherServices {
 
         publisherRepository.save(publisher);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Publisher deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Editora excluída com sucesso.");
     }
 }

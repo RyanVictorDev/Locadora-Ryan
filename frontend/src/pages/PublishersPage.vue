@@ -51,7 +51,7 @@
           </q-card-section>
 
           <q-card-section>
-            <q-form @submit="onSubmit" class="q-gutter-md q-my-auto">
+            <q-form @submit="registerAction" class="q-gutter-md q-my-auto">
               <q-input v-model="publisherToCreate.name" label="Nome da Editora" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
               <q-input v-model="publisherToCreate.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
               <q-input v-model="publisherToCreate.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']"/>
@@ -59,7 +59,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.register.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary" @click="registerAction"/>
+                <q-btn flat label="Salvar" type="submit" color="primary"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -129,7 +129,7 @@
           </q-card-section>
 
           <q-card-section>
-            <q-form @submit="onSubmit" class="q-gutter-md q-my-auto">
+            <q-form @submit="performEditAction" class="q-gutter-md q-my-auto">
               <q-input v-model="editoraInfor.name" label="Nome da Editora" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
               <q-input v-model="editoraInfor.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
               <q-input v-model="editoraInfor.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']"/>
@@ -137,7 +137,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.edit.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary" @click="performEditAction"/>
+                <q-btn flat label="Salvar" type="submit" color="primary"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -322,7 +322,13 @@ const createRow = (publisherToCreate) => {
     if (error.response.status == 403) {
         showNotification('negative', "Você não tem permissao!");
       } else {
-        showNotification('negative', error.response.data.error);
+        const errors = error.response.data;
+
+        for (const [field, message] of Object.entries(errors)) {
+
+          showNotification('negative', message);
+
+        }
       }
 
       console.log("Erro ao criar editora", error.response.data.error);
@@ -359,7 +365,13 @@ const editRow = (editoraInfor) => {
       if (error.response.status == 403) {
         showNotification('negative', "Você não tem permissao!");
       } else {
-        showNotification('negative', error.response.data.error);
+        const errors = error.response.data;
+
+        for (const [field, message] of Object.entries(errors)) {
+
+          showNotification('negative', message);
+
+        }
       }
 
       console.log("Erro ao editar editora", error.response.status);
@@ -392,10 +404,6 @@ const deleteRow = (id) => {
 const performDeleteAction = () => {
   const { row } = dialogs.value.delete;
   deleteRow(row.id);
-};
-
-const onSubmit = () => {
-  console.log("Teste");
 };
 </script>
 

@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record UpdateRenterRequestDTO(
-        @NotBlank(message = "The name cannot be empty") String name,
-        @NotBlank(message = "The email cannot be empty") @Email(message = "Invalid email.") String email,
-        @NotBlank(message = "The telephone cannot be empty") String telephone,
-        @NotBlank(message = "The address cannot be empty") String address,
+        @NotBlank(message = "O nome não pode estar vazio.") String name,
+        @NotBlank(message = "O email não pode estar vazio.") @Email(message = "Invalid email.") String email,
+        @NotBlank(message = "O telefone não pode estar vazio.") String telephone,
+        @NotBlank(message = "O Endereço não pode estar vazio.") String address,
         String cpf) {
 }

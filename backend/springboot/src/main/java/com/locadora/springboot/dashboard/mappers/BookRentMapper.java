@@ -2,7 +2,7 @@ package com.locadora.springboot.dashboard.mappers;
 
 import com.locadora.springboot.books.models.BookModel;
 import com.locadora.springboot.dashboard.DTOs.BooksMoreRented;
-import com.locadora.springboot.rents.models.RentModel;  // Adicione esta importação para o modelo de aluguel
+import com.locadora.springboot.rents.models.RentModel;
 import com.locadora.springboot.rents.repositories.RentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

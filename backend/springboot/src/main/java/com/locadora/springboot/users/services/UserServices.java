@@ -42,8 +42,7 @@ public class UserServices {
 
     public ResponseEntity<Void> create(@Valid CreateUserRequestDTO data) {
 
-        userValidation.validateName(data);
-        userValidation.validateEmail(data);
+        userValidation.create(data);
 
         String encryptedPassword = passwordEncoder.encode(data.password());
         UserModel newUser = new UserModel(data.name(), data.email(), encryptedPassword, data.role());
@@ -61,6 +60,19 @@ public class UserServices {
             return users;
         } else {
             return userRepository.findAllByName(search, pageable);
+        }
+    }
+
+    public Page<UserModel> findAllByRole(String search, int page, String role) {
+        int size = 5;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+
+        if (Objects.equals(search, "")) {
+            Page<UserModel> users = userRepository.findAllByRole(role, pageable);
+            if (users.isEmpty()) throw new ModelNotFoundException();
+            return users;
+        } else {
+            return userRepository.findAllByRoleAndSearch(role, search, pageable);
         }
     }
 
@@ -83,8 +95,7 @@ public class UserServices {
         }
         var userModel = response.get();
 
-        userValidation.validateNameUpdate(updateUserRequestDTO, id);
-        userValidation.validateUpdateEmail(updateUserRequestDTO, id);
+        userValidation.update(updateUserRequestDTO, id);
 
         userModel.setName(updateUserRequestDTO.name());
         userModel.setEmail(updateUserRequestDTO.email());
@@ -143,5 +154,13 @@ public class UserServices {
         resetTokenRepository.delete(resetToken);
 
         return true;
+    }
+
+    public String getUserNameByEmail(String email) {
+        UserModel user = userRepository.findByEmail(email);
+        if (user != null) {
+            return user.getName();
+        }
+        return null;
     }
 }
