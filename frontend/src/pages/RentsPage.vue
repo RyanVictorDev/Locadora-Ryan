@@ -4,47 +4,47 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Aluguéis
-          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog" itemid="registerBtn"/>
         </div>
         <q-form @submit.prevent="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
-          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%">
+          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%" itemid="searchInput">
             <template v-slot:append>
-              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" />
+              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" itemid="closeSearchBtn"/>
             </template>
 
             <template v-slot:after>
-              <q-btn round dense flat icon="search" @click="getRows(srch)"/>
+              <q-btn round dense flat icon="search" @click="getRows(srch)" itemid="searchBtn"/>
             </template>
           </q-input>
         </q-form>
 
-        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list">
+        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list" itemid="filterBtn">
           <q-list>
-            <q-item clickable v-close-popup @click="statusFilter('RENTED')">
+            <q-item clickable v-close-popup @click="statusFilter('RENTED')" itemid="filterAlugadosBtn">
               <q-item-section>
                 <q-item-label>Alugados</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="statusFilter('LATE')">
+            <q-item clickable v-close-popup @click="statusFilter('LATE')" itemid="filterAtrasadosBtn">
               <q-item-section>
                 <q-item-label>Atrasados</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="statusFilter('IN_TIME')">
+            <q-item clickable v-close-popup @click="statusFilter('IN_TIME')" itemid="filterNoPrazoBtn">
               <q-item-section>
                 <q-item-label>Devolvido no prazo</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="statusFilter('DELIVERED_WITH_DELAY')">
+            <q-item clickable v-close-popup @click="statusFilter('DELIVERED_WITH_DELAY')" itemid="filterForaDoPrazoBtn">
               <q-item-section>
                 <q-item-label>Devolvido fora prazo</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="statusFilter('')">
+            <q-item clickable v-close-popup @click="statusFilter('')" itemid="filterTodosBtn">
               <q-item-section>
                 <q-item-label>Todos</q-item-label>
               </q-item-section>
@@ -85,9 +85,10 @@
 
           <q-card-section>
             <q-form @submit.prevent="rentAction()" class="q-gutter-md q-my-auto">
-              <q-input v-model="bookToRent.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules :min="today" :max="maxReturnDate" required="true"/>
+              <q-input v-model="bookToRent.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules :min="today" :max="maxReturnDate" required="true" itemid="deliveryInput"/>
 
               <q-select
+                itemid="renterInput"
                 filled
                 v-model="selectedRenter"
                 use-input
@@ -110,7 +111,10 @@
                 </template>
               </q-select>
 
+              <span>teste: {{ bookToRent.renterId }}</span>
+
               <q-select
+                itemid="bookInput"
                 filled
                 v-model="selectedBook"
                 use-input
@@ -137,7 +141,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.register.visible = false"/>
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -153,7 +157,7 @@
 
           <q-card-actions align="right">
             <q-btn flat label="Fechar" color="primary" @click="dialogs.rent.visible = false" />
-            <q-btn flat label="Devolver" color="primary" @click="performDeliveryAction(dialogs.rent.row.id)" />
+            <q-btn flat label="Devolver" color="primary" @click="performDeliveryAction(dialogs.rent.row.id)" itemid="saveBtn"/>
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -169,7 +173,7 @@
             <q-form @submit.prevent="editAction(dialogs.edit.row.id, rentToEdit)" class="q-gutter-md q-my-auto">
               <q-input v-model="dialogs.edit.row.book.name" label="Título do livro" filled lazy-rules readonly/>
               <q-input v-model="rentToEdit.renterName" label="ID do locatário" filled lazy-rules readonly/>
-              <q-input v-model="rentToEdit.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules/>
+              <q-input v-model="rentToEdit.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules itemid="deadLineInputUpdate"/>
 
               <q-select
                 filled
@@ -195,7 +199,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.edit.visible = false"/>
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>

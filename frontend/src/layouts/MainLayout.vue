@@ -19,9 +19,10 @@
           class="q-gutter-md q-my-auto spacer"
         >
           <q-input
+            itemid="emailInput"
             filled
             v-model="name"
-            label="Email de usuário *"
+            label="Digite seu email"
             hint="Digite o seu email de usuário"
             lazy-rules
             :rules="[val => !!val
@@ -30,6 +31,7 @@
           />
 
           <q-input
+            itemid="passwordInput"
             filled
             type="password"
             v-model="password"
@@ -46,7 +48,7 @@
           />
 
           <div>
-            <q-btn label="Login" type="submit" color="primary" />
+            <q-btn itemid="loginBtn" label="Login" type="submit" color="primary" />
             <q-btn @Click="forguetPassword" label="Esqueci senha" class="q-ml-sm text-center text-cyan-8 text-italic text-body2"/>
           </div>
         </q-form>
@@ -178,6 +180,7 @@
         </q-list>
         <div class="flex-grow"></div>
         <q-item
+          itemid="logoutBtn"
           clickable
           exact
           class="q-mx-auto q-mb-sm logout"

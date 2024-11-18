@@ -4,17 +4,17 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Livros
-          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog" itemid="registerBtn"/>
         </div>
 
         <q-form @submit="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
-          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%">
+          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%" itemid="searchInput">
             <template v-slot:append>
-              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer"/>
+              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" itemid="closeSearchBtn"/>
             </template>
 
             <template v-slot:after>
-              <q-btn round dense flat icon="search" @click="getRows(srch)"/>
+              <q-btn round dense flat icon="search" @click="getRows(srch)" itemid="searchBtn"/>
             </template>
           </q-input>
         </q-form>
@@ -52,12 +52,13 @@
 
           <q-card-section>
             <q-form @submit.prevent="registerAction" class="q-gutter-none q-my-auto">
-              <q-input v-model="bookToCreate.name" label="Título do livro" filled lazy-rules :rules="[val => val && val.length > 4 || 'É necessário ter mais de quatro caracteres']"/>
-              <q-input v-model="bookToCreate.author" label="Autor" filled lazy-rules :rules="[val => val && val.length > 3 || 'É necessário ter mais de três caracteres']"/>
-              <q-input v-model="bookToCreate.totalQuantity" label="Quantidade" type="number" filled lazy-rules :rules="[val => val > 0 || 'É necessário ter pelo menos 1']"/>
-              <q-input v-model="bookToCreate.launchDate" label="Data de lançamento" type="date" mask="####-##-##" fill-mask filled lazy-rules :rules="[val => val && val.length >= 6 || 'Adicione uma data válida']" :max="today"/>
+              <q-input v-model="bookToCreate.name" label="Título do livro" filled lazy-rules :rules="[val => val && val.length > 4 || 'É necessário ter mais de quatro caracteres']" itemid="bookNameInput"/>
+              <q-input v-model="bookToCreate.author" label="Autor" filled lazy-rules :rules="[val => val && val.length > 3 || 'É necessário ter mais de três caracteres']" itemid="bookAuthInput"/>
+              <q-input v-model="bookToCreate.totalQuantity" label="Quantidade" type="number" filled lazy-rules :rules="[val => val > 0 || 'É necessário ter pelo menos 1']" itemid="bookQuantityInput"/>
+              <q-input v-model="bookToCreate.launchDate" label="Data de lançamento" type="date" mask="####-##-##" fill-mask filled lazy-rules :rules="[val => val && val.length >= 6 || 'Adicione uma data válida']" :max="today" itemid="bookLaunchDateInput"/>
 
               <q-select
+                itemid="publisherInput"
                 filled
                 v-model="selectedPublisher"
                 use-input
@@ -84,7 +85,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.register.visible = false"/>
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -100,9 +101,10 @@
 
           <q-card-section>
             <q-form @submit.prevent="rentAction(dialogs.rent.row.id)" class="q-gutter-md q-my-auto">
-              <q-input v-model="bookToRent.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules :min="today" :max="maxReturnDate"/>
+              <q-input v-model="bookToRent.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules :min="today" :max="maxReturnDate" itemid="deadLineInput"/>
 
               <q-select
+                itemid="renterInput"
                 filled
                 v-model="selectedRenter"
                 use-input
@@ -128,7 +130,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.rent.visible = false"/>
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -144,10 +146,10 @@
 
           <q-card-section>
             <q-form @submit.prevent="performEditAction(bookInforEdit), showMore(dialogs.edit.row.id)" class="q-gutter-md q-my-auto">
-              <q-input v-model="bookInforEdit.name" label="Título do livro" filled lazy-rules/>
-              <q-input v-model="bookInforEdit.author" label="Autor" filled lazy-rules/>
-              <q-input v-model="bookInforEdit.totalQuantity" label="Estoque" filled lazy-rules/>
-              <q-input v-model="bookInforEdit.launchDate" label="Data de lançamento" type="date" filled lazy-rules/>
+              <q-input v-model="bookInforEdit.name" label="Título do livro" filled lazy-rules itemid="updateNameInput"/>
+              <q-input v-model="bookInforEdit.author" label="Autor" filled lazy-rules itemid="updateAuthInput"/>
+              <q-input v-model="bookInforEdit.totalQuantity" label="Estoque" filled lazy-rules itemid="updateQuantityInput"/>
+              <q-input v-model="bookInforEdit.launchDate" label="Data de lançamento" type="date" filled lazy-rules itemid="updateLaunchDateInput"/>
               <q-input v-model="bookInforEdit.publisherId" label="Id da editora" filled lazy-rules readonly/>
 
               <q-select
@@ -174,7 +176,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.edit.visible = false"/>
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -190,7 +192,7 @@
 
           <q-card-actions align="right">
             <q-btn flat label="Cancelar" color="primary" @click="dialogs.delete.visible = false"/>
-            <q-btn flat label="Excluir" color="primary" @click="performDeleteAction"/>
+            <q-btn flat label="Excluir" color="primary" @click="performDeleteAction" itemid="saveBtn"/>
           </q-card-actions>
         </q-card>
       </q-dialog>

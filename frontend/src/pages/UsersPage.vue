@@ -4,37 +4,37 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Usuários
-          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog" itemid="cadastrarBtn"/>
         </div>
 
         <q-form @submit="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
-          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%">
+          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%" itemid="searchInput">
             <template v-slot:append>
-              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" />
+              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" itemid="closeSearchBtn"/>
             </template>
 
             <template v-slot:after>
-              <q-btn @click="getRows(srch)" round dense flat icon="search" />
+              <q-btn @click="getRows(srch)" round dense flat icon="search" itemid="searchBtn"/>
             </template>
           </q-input>
         </q-form>
 
 
-        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list">
+        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list" itemid="filterBtn">
           <q-list>
-            <q-item clickable v-close-popup @click="permissionFilter('ADMIN')">
+            <q-item clickable v-close-popup @click="permissionFilter('ADMIN')" itemid="filterEditorBtn">
               <q-item-section>
                 <q-item-label>Editor</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="permissionFilter('USER')">
+            <q-item clickable v-close-popup @click="permissionFilter('USER')" itemid="filterLeitorBtn">
               <q-item-section>
                 <q-item-label>Leitor</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="permissionFilter('')">
+            <q-item clickable v-close-popup @click="permissionFilter('')" itemid="filterTodosBtn">
               <q-item-section>
                 <q-item-label>Todos</q-item-label>
               </q-item-section>
@@ -75,18 +75,18 @@
 
           <q-card-section>
             <q-form @submit="registerAction" class="q-gutter-md q-my-auto">
-              <q-input v-model="userToCreate.name" label="Nome do usuário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="userToCreate.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
-              <q-input v-model="userToCreate.password" label="Senha" type="password" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
+              <q-input v-model="userToCreate.name" label="Nome do usuário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="usernameInput"/>
+              <q-input v-model="userToCreate.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']" itemid="emailInput"/>
+              <q-input v-model="userToCreate.password" label="Senha" type="password" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="passwordInput"/>
 
               <div class="q-gutter-sm q-px-auto">
-                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ADMIN" label="Editor" :rules="[val => !!val || 'Por favor, selecione uma função']"/>
-                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="USER" label="Leitor" :rules="[val => !!val || 'Por favor, selecione uma função']"/>
+                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ADMIN" label="Editor" :rules="[val => !!val || 'Por favor, selecione uma função']" itemid="roleEditor"/>
+                <q-radio v-model="userToCreate.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="USER" label="Leitor" :rules="[val => !!val || 'Por favor, selecione uma função']" itemid="roleLeitor"/>
               </div>
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.register.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -127,7 +127,7 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="Fechar" color="primary" @click="dialogs.view.visible = false" />
+            <q-btn flat label="Fechar" color="primary" @click="dialogs.view.visible = false" itemid="cancelBtn"/>
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -141,8 +141,8 @@
 
           <q-card-section>
             <q-form @submit="performEditAction" class="q-gutter-md q-my-auto">
-              <q-input v-model="userInfor.name" label="Nome do usuário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="userInfor.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
+              <q-input v-model="userInfor.name" label="Nome do usuário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="nameUpdateInput"/>
+              <q-input v-model="userInfor.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']" itemid="emailUpdateInput"/>
 
               <div class="q-gutter-sm q-px-auto">
                 <q-radio v-model="userInfor.role" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ADMIN" label="Editor" />
@@ -151,7 +151,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.edit.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>

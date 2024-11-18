@@ -4,17 +4,17 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Locatários
-          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegister"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegister" itemid="registerBtn"/>
         </div>
 
         <q-form @submit="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
-          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%">
+          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%" itemid="searchInput">
             <template v-slot:append>
-              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" />
+              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" itemid="closeSearchBtn"/>
             </template>
 
             <template v-slot:after>
-              <q-btn round dense flat icon="search" @click="getRows(srch)"/>
+              <q-btn round dense flat icon="search" @click="getRows(srch)" itemid="searchBtn"/>
             </template>
           </q-input>
         </q-form>
@@ -52,15 +52,15 @@
 
           <q-card-section>
             <q-form @submit="registerAction" class="q-gutter-md q-my-auto">
-              <q-input v-model="renterToCreate.name" label="Nome do locatário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="renterToCreate.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
-              <q-input v-model="renterToCreate.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']"/>
-              <q-input v-model="renterToCreate.address" label="Endereço" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="renterToCreate.cpf" label="Cpf" mask="###.###.###-##" fill-mask filled lazy-rules/>
+              <q-input v-model="renterToCreate.name" label="Nome do locatário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="renterNameInput"/>
+              <q-input v-model="renterToCreate.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']" itemid="renterEmailInput"/>
+              <q-input v-model="renterToCreate.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']" itemid="renterPhoneInput"/>
+              <q-input v-model="renterToCreate.address" label="Endereço" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="renterAdressInput"/>
+              <q-input v-model="renterToCreate.cpf" label="Cpf" mask="###.###.###-##" fill-mask filled lazy-rules itemid="renterCpfInput"/>
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.register.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -124,7 +124,7 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="Fechar" color="primary" @click="dialogs.view.visible = false" />
+            <q-btn flat label="Fechar" color="primary" @click="dialogs.view.visible = false" itemid="closeBtn"/>
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -138,15 +138,15 @@
 
           <q-card-section>
             <q-form @submit="performEditAction" class="q-gutter-md q-my-auto">
-              <q-input v-model="renterInfor.name" label="Nome do locatário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="renterInfor.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
-              <q-input v-model="renterInfor.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']"/>
-              <q-input v-model="renterInfor.address" label="Endereço" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="renterInfor.cpf" label="CPF" mask="###.###.###-##" fill-mask filled lazy-rules/>
+              <q-input v-model="renterInfor.name" label="Nome do locatário" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="updateNameInput"/>
+              <q-input v-model="renterInfor.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']" itemid="updateEmailInput"/>
+              <q-input v-model="renterInfor.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']" itemid="updatePhoneInput"/>
+              <q-input v-model="renterInfor.address" label="Endereço" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="updateAdressInput"/>
+              <q-input v-model="renterInfor.cpf" label="CPF" mask="###.###.###-##" fill-mask filled lazy-rules itemid="updateCpfInput"/>
 
               <q-card-actions align="right">
-                <q-btn flat label="Cancelar" color="primary" @click="dialogs.edit.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Cancelar" color="primary" @click="dialogs.edit.visible = false"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -162,7 +162,7 @@
 
           <q-card-actions align="right">
             <q-btn flat label="Cancelar" color="primary" @click="dialogs.delete.visible = false"/>
-            <q-btn flat label="Excluir" color="primary" @click="performDeleteAction"/>
+            <q-btn flat label="Excluir" color="primary" @click="performDeleteAction" itemid="saveBtn"/>
           </q-card-actions>
         </q-card>
       </q-dialog>

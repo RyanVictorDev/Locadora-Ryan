@@ -1,5 +1,6 @@
 <template>
   <q-item
+    :itemid="props.title"
     clickable
     :to="route"
     exact

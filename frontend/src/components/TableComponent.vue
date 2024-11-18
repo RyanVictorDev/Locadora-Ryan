@@ -23,6 +23,7 @@
               round
               :icon="icon"
               @click="handleAction(props.row, icon)"
+              :itemid="icon + '-' + props.row.name"
             />
           </div>
         </div>

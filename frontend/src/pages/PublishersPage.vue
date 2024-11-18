@@ -4,17 +4,17 @@
       <div class="row items-center q-mx-auto text-h5">
         <div class="text-weight-bold q-mr-lg">
           Editoras
-          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog"/>
+          <q-btn v-if="isAdmin" push color="teal-10" label="Cadastrar" class="q-ml-sm" @click="openRegisterDialog" itemid="registerBtn"/>
         </div>
 
         <q-form @submit="getRows(srch)" class="q-ml-sm col" input-style="min-width: 100%">
-          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%">
+          <q-input v-model="srch" label="Pesquisar..." class="q-ml-sm col" input-style="min-width: 100%" itemid="searchInput">
             <template v-slot:append>
-              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" />
+              <q-icon v-if="srch !== ''" name="close" @click="srch = '', getRows(srch)" class="cursor-pointer" itemid="closeSearchBtn"/>
             </template>
 
             <template v-slot:after>
-              <q-btn round dense flat icon="search" @click="getRows(srch)"/>
+              <q-btn round dense flat icon="search" @click="getRows(srch)" itemid="searchBtn"/>
             </template>
           </q-input>
         </q-form>
@@ -52,14 +52,14 @@
 
           <q-card-section>
             <q-form @submit="registerAction" class="q-gutter-md q-my-auto">
-              <q-input v-model="publisherToCreate.name" label="Nome da Editora" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="publisherToCreate.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
-              <q-input v-model="publisherToCreate.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']"/>
-              <q-input v-model="publisherToCreate.site" label="Site" filled lazy-rules/>
+              <q-input v-model="publisherToCreate.name" label="Nome da Editora" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="publisherNameInput"/>
+              <q-input v-model="publisherToCreate.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']" itemid="publisherEmailInput"/>
+              <q-input v-model="publisherToCreate.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']" itemid="publisherPhoneInput"/>
+              <q-input v-model="publisherToCreate.site" label="Site" filled lazy-rules itemid="publisherSiteInput"/>
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.register.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -116,7 +116,7 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="Fechar" color="primary" @click="dialogs.view.visible = false" />
+            <q-btn flat label="Fechar" color="primary" @click="dialogs.view.visible = false" itemid="closeBtn"/>
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -130,14 +130,14 @@
 
           <q-card-section>
             <q-form @submit="performEditAction" class="q-gutter-md q-my-auto">
-              <q-input v-model="editoraInfor.name" label="Nome da Editora" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']"/>
-              <q-input v-model="editoraInfor.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"/>
-              <q-input v-model="editoraInfor.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']"/>
-              <q-input v-model="editoraInfor.site" label="Site" filled lazy-rules/>
+              <q-input v-model="editoraInfor.name" label="Nome da Editora" filled lazy-rules :rules="[val => val && val.length > 3 || 'É nescessário ter mais de três caracteres']" itemid="updateNameInput"/>
+              <q-input v-model="editoraInfor.email" label="Email" filled lazy-rules :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']" itemid="updateEmailInput"/>
+              <q-input v-model="editoraInfor.telephone" label="Telefone" mask="(##) #####-####" fill-mask filled lazy-rules :rules="[val => val && val.length > 10 || 'Adicione um número válido']" itemid="updatePhoneInput"/>
+              <q-input v-model="editoraInfor.site" label="Site" filled lazy-rules itemid="updateSiteInput"/>
 
               <q-card-actions align="right">
                 <q-btn flat label="Cancelar" color="primary" @click="dialogs.edit.visible = false" />
-                <q-btn flat label="Salvar" type="submit" color="primary"/>
+                <q-btn flat label="Salvar" type="submit" color="primary" itemid="saveBtn"/>
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -153,7 +153,7 @@
 
           <q-card-actions align="right">
             <q-btn flat label="Cancelar" color="primary" @click="dialogs.delete.visible = false"/>
-            <q-btn flat label="Excluir" color="primary" @click="performDeleteAction"/>
+            <q-btn flat label="Excluir" color="primary" @click="performDeleteAction" itemid="saveBtn"/>
           </q-card-actions>
         </q-card>
       </q-dialog>

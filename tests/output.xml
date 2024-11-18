@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.13.0 on win32)" generated="2024-11-13T14:59:16.203811" rpa="false" schemaversion="5">
+<suite id="s1" name="usersTest" source="C:\Users\vryan\Downloads\locadora-ryan\locadora-ryan\tests\usersTest.robot">
+<test id="s1-t1" name="Teste de criação de usuário leitor" line="44">
+<kw name="Login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:17.409784" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8888'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-13T14:59:17.409097" elapsed="3.272117"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-13T14:59:20.681746" elapsed="0.122659"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:20.804830" elapsed="0.207384"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:21.012969" level="INFO">Clicking element 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.012591" elapsed="0.097192"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.110253" elapsed="0.040529"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:21.151307" level="INFO">Typing text 'admin@gmail.com' into text field 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.151028" elapsed="0.225169"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.376459" elapsed="0.031551"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:21.408678" level="INFO">Clicking element 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.408363" elapsed="0.105332"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.514168" elapsed="0.047494"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:21.562437" level="INFO">Typing text '12345678' into text field 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.562023" elapsed="0.158140"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:21.720974" level="INFO">Clicking element 'css=[itemid="loginBtn"]'.</msg>
+<arg>css=[itemid="loginBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.720582" elapsed="0.136490"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:22.558457" level="INFO">Slept 700 milliseconds.</msg>
+<arg>0.7</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:21.857417" elapsed="0.701211"/>
+</kw>
+<status status="PASS" start="2024-11-13T14:59:17.405582" elapsed="5.153250"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:22.559676" level="INFO">Clicking element 'css=[itemid="Controle de usuários"]'.</msg>
+<msg time="2024-11-13T14:59:22.827426" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-11-13T14:59:22.827702" level="FAIL">Element with locator 'css=[itemid="Controle de usuários"]' not found.</msg>
+<arg>css=[itemid="Controle de usuários"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="FAIL" start="2024-11-13T14:59:22.559319" elapsed="0.272827">Element with locator 'css=[itemid="Controle de usuários"]' not found.</status>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="cadastrarBtn"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.832780" elapsed="0.000090"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="cadastrarBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.833252" elapsed="0.000040"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="usernameInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.834119" elapsed="0.000065"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<arg>css=[itemid="usernameInput"]</arg>
+<arg>${USERNAME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.834702" elapsed="0.000088"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${USER_EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.835209" elapsed="0.000045"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.835557" elapsed="0.000035"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="roleLeitor"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.835846" elapsed="0.000035"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="saveBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.836289" elapsed="0.000033"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>1</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.836635" elapsed="0.000051"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" start="2024-11-13T14:59:22.836949" elapsed="0.000041"/>
+</kw>
+<status status="FAIL" start="2024-11-13T14:59:17.403313" elapsed="5.434108">Element with locator 'css=[itemid="Controle de usuários"]' not found.</status>
+</test>
+<test id="s1-t2" name="Teste de criação de usuário editor" line="66">
+<kw name="Login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:22.841781" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8888'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-13T14:59:22.841235" elapsed="4.524138"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-13T14:59:27.365911" elapsed="0.450219"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:27.816511" elapsed="0.316163"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:28.133586" level="INFO">Clicking element 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.133116" elapsed="0.119716"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.253237" elapsed="0.048419"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:28.302485" level="INFO">Typing text 'admin@gmail.com' into text field 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.301991" elapsed="0.258409"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.560793" elapsed="0.042619"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:28.604245" level="INFO">Clicking element 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.603781" elapsed="0.096780"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.700942" elapsed="0.040735"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:28.742629" level="INFO">Typing text '12345678' into text field 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.742108" elapsed="0.240416"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:28.983533" level="INFO">Clicking element 'css=[itemid="loginBtn"]'.</msg>
+<arg>css=[itemid="loginBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:28.983027" elapsed="0.150122"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:29.834414" level="INFO">Slept 700 milliseconds.</msg>
+<arg>0.7</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:29.133473" elapsed="0.701187"/>
+</kw>
+<status status="PASS" start="2024-11-13T14:59:22.840299" elapsed="6.994625"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:29.962733" level="INFO">Clicking element 'css=[itemid="Controle de usuários"]'.</msg>
+<arg>css=[itemid="Controle de usuários"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:29.962276" elapsed="0.405956"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="cadastrarBtn"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:30.370292" elapsed="0.793164"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:31.171879" level="INFO">Clicking element 'css=[itemid="cadastrarBtn"]'.</msg>
+<arg>css=[itemid="cadastrarBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:31.171435" elapsed="0.269047"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="usernameInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:31.451718" elapsed="0.253286"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:31.708726" level="INFO">Typing text 'Username Robot' into text field 'css=[itemid="usernameInput"]'.</msg>
+<arg>css=[itemid="usernameInput"]</arg>
+<arg>${USERNAME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:31.706907" elapsed="0.541860"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:32.249894" level="INFO">Typing text 'robotuser@gmail.com' into text field 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${USER_EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:32.249391" elapsed="0.513124"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:32.767632" level="INFO">Typing text '333222111' into text field 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:32.767077" elapsed="0.370700"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:33.149634" level="INFO">Clicking element 'css=[itemid="roleEditor"]'.</msg>
+<arg>css=[itemid="roleEditor"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:33.148909" elapsed="0.214716"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:33.368399" level="INFO">Clicking element 'css=[itemid="saveBtn"]'.</msg>
+<arg>css=[itemid="saveBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:33.368017" elapsed="0.133207"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:34.512390" level="INFO">Slept 1 second.</msg>
+<arg>1</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:33.511057" elapsed="1.001522"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-11-13T14:59:34.513233" elapsed="2.767843"/>
+</kw>
+<status status="PASS" start="2024-11-13T14:59:22.838965" elapsed="14.442523"/>
+</test>
+<test id="s1-t3" name="Teste de visualizar detalhes" line="89">
+<kw name="Login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:37.283669" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8888'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-13T14:59:37.283442" elapsed="2.966935"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-13T14:59:40.250807" elapsed="0.152612"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:40.403805" elapsed="0.317122"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:40.721685" level="INFO">Clicking element 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:40.721308" elapsed="0.117299"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:40.838950" elapsed="0.044889"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:40.884984" level="INFO">Typing text 'admin@gmail.com' into text field 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:40.884366" elapsed="0.264433"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:41.149207" elapsed="0.038380"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:41.188428" level="INFO">Clicking element 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:41.187992" elapsed="0.140452"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:41.328846" elapsed="0.048052"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:41.377710" level="INFO">Typing text '12345678' into text field 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:41.377261" elapsed="0.198385"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:41.576730" level="INFO">Clicking element 'css=[itemid="loginBtn"]'.</msg>
+<arg>css=[itemid="loginBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:41.576169" elapsed="0.105060"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:42.382705" level="INFO">Slept 700 milliseconds.</msg>
+<arg>0.7</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:41.681623" elapsed="0.701295"/>
+</kw>
+<status status="PASS" start="2024-11-13T14:59:37.283105" elapsed="5.100075"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:42.441524" level="INFO">Clicking element 'css=[itemid="Controle de usuários"]'.</msg>
+<arg>css=[itemid="Controle de usuários"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:42.440982" elapsed="0.660984"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="visibility-7"]</arg>
+<arg>timeout=3s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:43.103251" elapsed="0.300076"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:43.406749" level="INFO">Clicking element 'css=[itemid="visibility-7"]'.</msg>
+<arg>css=[itemid="visibility-7"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:43.403876" elapsed="0.207162"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:46.612348" level="INFO">Slept 3 seconds.</msg>
+<arg>3</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:43.611713" elapsed="3.000801"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:46.613811" level="INFO">Clicking element 'css=[itemid="cancelBtn"]'.</msg>
+<arg>css=[itemid="cancelBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:46.613551" elapsed="0.086220"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:47.201017" level="INFO">Slept 500 milliseconds.</msg>
+<arg>0.5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:46.700438" elapsed="0.500712"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-11-13T14:59:47.201639" elapsed="2.362874"/>
+</kw>
+<status status="PASS" start="2024-11-13T14:59:37.282515" elapsed="12.283016"/>
+</test>
+<test id="s1-t4" name="Teste de edição de usuário" line="106">
+<kw name="Login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:49.569410" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8888'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-13T14:59:49.569071" elapsed="2.791360"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-13T14:59:52.360699" elapsed="0.119476"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:52.480492" elapsed="0.379633"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:52.860878" level="INFO">Clicking element 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:52.860502" elapsed="0.091486"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:52.952420" elapsed="0.040158"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:52.993174" level="INFO">Typing text 'admin@gmail.com' into text field 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:52.992832" elapsed="0.273741"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:53.266893" elapsed="0.031684"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:53.299018" level="INFO">Clicking element 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:53.298788" elapsed="0.076962"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T14:59:53.376068" elapsed="0.031783"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:53.408656" level="INFO">Typing text '12345678' into text field 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:53.408184" elapsed="0.149490"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:53.558284" level="INFO">Clicking element 'css=[itemid="loginBtn"]'.</msg>
+<arg>css=[itemid="loginBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:53.557994" elapsed="0.090658"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:54.350131" level="INFO">Slept 700 milliseconds.</msg>
+<arg>0.7</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:53.648990" elapsed="0.701384"/>
+</kw>
+<status status="PASS" start="2024-11-13T14:59:49.568462" elapsed="4.782131"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:54.502271" level="INFO">Clicking element 'css=[itemid="Controle de usuários"]'.</msg>
+<arg>css=[itemid="Controle de usuários"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:54.501604" elapsed="0.349469"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="edit-8"]</arg>
+<arg>timeout=3s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T14:59:54.852847" elapsed="0.461702"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:55.316185" level="INFO">Clicking element 'css=[itemid="edit-8"]'.</msg>
+<arg>css=[itemid="edit-8"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:55.315658" elapsed="0.216620"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:56.534493" level="INFO">Slept 1 second.</msg>
+<arg>1</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:55.533982" elapsed="1.000869"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:56.537282" level="INFO">Clicking element 'css=[itemid="nameUpdateInput"]'.</msg>
+<arg>css=[itemid="nameUpdateInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:56.536730" elapsed="0.093996"/>
+</kw>
+<kw name="Press Keys" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:56.633579" level="INFO">Sending key(s) ('CTRL+A+BACKSPACE',) to css=[itemid="nameUpdateInput"] element.</msg>
+<msg time="2024-11-13T14:59:56.978939" level="INFO">Pressing special key CONTROL down.</msg>
+<msg time="2024-11-13T14:59:56.979030" level="INFO">Sending key A</msg>
+<msg time="2024-11-13T14:59:56.979091" level="INFO">Pressing special key BACKSPACE down.</msg>
+<msg time="2024-11-13T14:59:56.979127" level="INFO">Releasing special key CONTROL.</msg>
+<msg time="2024-11-13T14:59:56.979160" level="INFO">Releasing special key BACKSPACE.</msg>
+<arg>css=[itemid="nameUpdateInput"]</arg>
+<arg>CTRL+A+BACKSPACE</arg>
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<status status="PASS" start="2024-11-13T14:59:56.632618" elapsed="0.371755"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:57.006697" level="INFO">Typing text 'Username Robot Updated' into text field 'css=[itemid="nameUpdateInput"]'.</msg>
+<arg>css=[itemid="nameUpdateInput"]</arg>
+<arg>${USERNAME_UPDATE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:57.005793" elapsed="0.208956"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:57.215888" level="INFO">Clicking element 'css=[itemid="emailUpdateInput"]'.</msg>
+<arg>css=[itemid="emailUpdateInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:57.215401" elapsed="0.080586"/>
+</kw>
+<kw name="Press Keys" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:57.298607" level="INFO">Sending key(s) ('CTRL+A+BACKSPACE',) to css=[itemid="emailUpdateInput"] element.</msg>
+<msg time="2024-11-13T14:59:57.619878" level="INFO">Pressing special key CONTROL down.</msg>
+<msg time="2024-11-13T14:59:57.620106" level="INFO">Sending key A</msg>
+<msg time="2024-11-13T14:59:57.620236" level="INFO">Pressing special key BACKSPACE down.</msg>
+<msg time="2024-11-13T14:59:57.620397" level="INFO">Releasing special key CONTROL.</msg>
+<msg time="2024-11-13T14:59:57.620507" level="INFO">Releasing special key BACKSPACE.</msg>
+<arg>css=[itemid="emailUpdateInput"]</arg>
+<arg>CTRL+A+BACKSPACE</arg>
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<status status="PASS" start="2024-11-13T14:59:57.297917" elapsed="0.345851"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:57.645094" level="INFO">Typing text 'robotuserUpdated@gmail.com' into text field 'css=[itemid="emailUpdateInput"]'.</msg>
+<arg>css=[itemid="emailUpdateInput"]</arg>
+<arg>${USER_EMAIL_UPDATE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:57.644423" elapsed="0.315723"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T14:59:57.963561" level="INFO">Clicking element 'css=[itemid="saveBtn"]'.</msg>
+<arg>css=[itemid="saveBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T14:59:57.963105" elapsed="0.118259"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T14:59:58.582963" level="INFO">Slept 500 milliseconds.</msg>
+<arg>0.5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T14:59:58.082081" elapsed="0.501178"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-11-13T14:59:58.584091" elapsed="2.329024"/>
+</kw>
+<status status="PASS" start="2024-11-13T14:59:49.567265" elapsed="11.346605"/>
+</test>
+<test id="s1-t5" name="Teste de filtro de usuários" line="135">
+<kw name="Login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:00.917598" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8888'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-13T15:00:00.917209" elapsed="3.445268"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-13T15:00:04.362829" elapsed="0.319887"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T15:00:04.683378" elapsed="0.066034"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:04.750188" level="INFO">Clicking element 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:04.749770" elapsed="0.096445"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T15:00:04.846563" elapsed="0.040980"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:04.888133" level="INFO">Typing text 'admin@gmail.com' into text field 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:04.887816" elapsed="0.275074"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T15:00:05.163324" elapsed="0.043000"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:05.207518" level="INFO">Clicking element 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:05.207053" elapsed="0.224257"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T15:00:05.431644" elapsed="0.106651"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:05.539472" level="INFO">Typing text '12345678' into text field 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:05.538888" elapsed="0.284616"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:05.825367" level="INFO">Clicking element 'css=[itemid="loginBtn"]'.</msg>
+<arg>css=[itemid="loginBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:05.823991" elapsed="0.124939"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T15:00:06.650548" level="INFO">Slept 700 milliseconds.</msg>
+<arg>0.7</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T15:00:05.949379" elapsed="0.701642"/>
+</kw>
+<status status="PASS" start="2024-11-13T15:00:00.916644" elapsed="5.734526"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:06.653180" level="INFO">Clicking element 'css=[itemid="Controle de usuários"]'.</msg>
+<msg time="2024-11-13T15:00:06.927179" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-11-13T15:00:06.927549" level="FAIL">Element with locator 'css=[itemid="Controle de usuários"]' not found.</msg>
+<arg>css=[itemid="Controle de usuários"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="FAIL" start="2024-11-13T15:00:06.652508" elapsed="0.276902">Element with locator 'css=[itemid="Controle de usuários"]' not found.</status>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>1</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.929878" elapsed="0.000073"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="filterBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.930333" elapsed="0.000042"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>0.5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.930675" elapsed="0.000039"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="filterEditorBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.930964" elapsed="0.000036"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.931214" elapsed="0.000034"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="filterBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.931458" elapsed="0.000033"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>0.5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.931697" elapsed="0.000037"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="filterLeitorBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.932100" elapsed="0.000033"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.932342" elapsed="0.000034"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="filterBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.932586" elapsed="0.000032"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>0.5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.932834" elapsed="0.000036"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>css=[itemid="filterTodosBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.933092" elapsed="0.000033"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.933326" elapsed="0.000034"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" start="2024-11-13T15:00:06.933728" elapsed="0.000046"/>
+</kw>
+<status status="FAIL" start="2024-11-13T15:00:00.915587" elapsed="6.020174">Element with locator 'css=[itemid="Controle de usuários"]' not found.</status>
+</test>
+<test id="s1-t6" name="Teste de pesquisa" line="162">
+<kw name="Login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:06.943127" level="INFO">Opening browser 'chrome' to base url 'http://localhost:8888'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-13T15:00:06.942485" elapsed="4.268887"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-13T15:00:11.211797" elapsed="0.363000"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T15:00:11.575351" elapsed="0.069887"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:11.646049" level="INFO">Clicking element 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:11.645668" elapsed="0.115909"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="emailInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T15:00:11.761983" elapsed="0.046698"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:11.809668" level="INFO">Typing text 'admin@gmail.com' into text field 'css=[itemid="emailInput"]'.</msg>
+<arg>css=[itemid="emailInput"]</arg>
+<arg>${EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:11.809115" elapsed="0.263482"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T15:00:12.072983" elapsed="0.038076"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:12.111809" level="INFO">Clicking element 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:12.111451" elapsed="0.103334"/>
+</kw>
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>css=[itemid="passwordInput"]</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2024-11-13T15:00:12.215445" elapsed="0.048086"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:12.264899" level="INFO">Typing text '12345678' into text field 'css=[itemid="passwordInput"]'.</msg>
+<arg>css=[itemid="passwordInput"]</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:12.264162" elapsed="0.215652"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:12.481234" level="INFO">Clicking element 'css=[itemid="loginBtn"]'.</msg>
+<arg>css=[itemid="loginBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:12.480405" elapsed="0.147404"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T15:00:13.329175" level="INFO">Slept 700 milliseconds.</msg>
+<arg>0.7</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T15:00:12.628363" elapsed="0.701040"/>
+</kw>
+<status status="PASS" start="2024-11-13T15:00:06.941490" elapsed="6.388174"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:13.330807" level="INFO">Clicking element 'css=[itemid="Controle de usuários"]'.</msg>
+<arg>css=[itemid="Controle de usuários"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:13.330274" elapsed="0.663224"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=[itemid="searchInput"]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-13T15:00:13.994092" elapsed="0.485596"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:14.480558" level="INFO">Typing text 'Username Robot Updated' into text field 'css=[itemid="searchInput"]'.</msg>
+<arg>css=[itemid="searchInput"]</arg>
+<arg>${USERNAME_UPDATE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:14.480122" elapsed="0.236410"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:14.721099" level="INFO">Clicking element 'css=[itemid="searchBtn"]'.</msg>
+<arg>css=[itemid="searchBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:14.720568" elapsed="0.091892"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T15:00:16.814378" level="INFO">Slept 2 seconds.</msg>
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T15:00:14.813092" elapsed="2.001552"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-11-13T15:00:16.817028" level="INFO">Clicking element 'css=[itemid="closeSearchBtn"]'.</msg>
+<arg>css=[itemid="closeSearchBtn"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-13T15:00:16.816508" elapsed="0.125923"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-13T15:00:17.990185" level="INFO">Slept 1 second.</msg>
+<arg>1</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-13T15:00:16.989069" elapsed="1.001346"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-11-13T15:00:17.993371" elapsed="4.031878"/>
+</kw>
+<status status="PASS" start="2024-11-13T15:00:06.940076" elapsed="15.086240"/>
+</test>
+<status status="FAIL" start="2024-11-13T14:59:16.207916" elapsed="65.820300"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="2" skip="0" id="s1" name="usersTest">usersTest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
