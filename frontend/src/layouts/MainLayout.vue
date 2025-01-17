@@ -82,7 +82,7 @@
             :rules="[val => !!val || 'Email é obrigatório', val => /^.+@gmail.com$/.test(val) || 'Email inválido']"
           />
           <div>
-            <q-btn label="Send" type="submit" color="primary" />
+            <q-btn label="Enviar" type="submit" color="primary" />
             <q-btn
               @Click="forguetPassword"
               label="Cancelar"

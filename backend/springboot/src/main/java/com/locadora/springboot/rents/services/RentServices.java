@@ -125,6 +125,11 @@ public class RentServices {
 
     public ResponseEntity<Object> update(int id, @Valid UpdateRentRecordDTO updateRentRecordDTO) {
         Optional<RentModel> rentOptional = rentRepository.findById(id);
+
+        if (rentOptional.isEmpty()) { return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aluguel não encontrado"); }
+
+        int originalBook = rentOptional.get().getBook().getId();
+
         if (rentOptional.isEmpty()) { return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aluguel não encontrado"); }
 
         RenterModel renter = renterRepository.findById(updateRentRecordDTO.renterId()).get();
@@ -137,6 +142,24 @@ public class RentServices {
         rentModel.setBook(book);
         rentModel.setRenter(renter);
         rentModel.setDeadLine(updateRentRecordDTO.deadLine());
+
+        if (originalBook != updateRentRecordDTO.bookId()){
+            BookModel originalBookModel = bookRepository.findById(originalBook).get();
+
+            rentValidation.validateBookTotalQuantity(book);
+
+            int totalQuantity = originalBookModel.getTotalQuantity();
+            originalBookModel.setTotalQuantity(totalQuantity + 1);
+            int totalInUse = originalBookModel.getTotalInUse();
+            originalBookModel.setTotalInUse(totalInUse - 1);
+            bookRepository.save(originalBookModel);
+
+            int totalQuantityBook = book.getTotalQuantity();
+            book.setTotalQuantity(totalQuantityBook - 1);
+            int totalInUseBook = book.getTotalInUse();
+            book.setTotalInUse(totalInUseBook + 1);
+            bookRepository.save(book);
+        }
 
         rentRepository.save(rentModel);
 

@@ -1,14 +1,17 @@
 *** Settings ***
-Library           RequestsLibrary
 Library           Collections
 Library           BuiltIn
 Library           SeleniumLibrary
 Library           XML
 Library           DateTime
-
+Suite Setup    Iniciar Navegador
+Suite Teardown    Fechar Navegador
 
 *** Variables ***
-${BASE_URL}          http://localhost:8888
+${BROWSER}    firefox
+${URL}        https://locadora-ryan.altislabtech.com.br/
+${HEADLESS_OPTIONS}    ${EMPTY}
+${BASE_URL}          http://localhost:7171
 ${EMAIL}       admin@gmail.com
 ${PASSWORD}    12345678
 
@@ -23,8 +26,21 @@ ${PUBLISHER_PHONE_UPDATED}    85982734655
 ${PUBLISHER_SITE_UPDATED}    https://roboot.com
 
 *** Keywords ***
+Iniciar Navegador
+    ${options}=    Evaluate    sys.modules['selenium.webdriver'].FirefoxOptions()    sys, selenium.webdriver
+    Call Method    ${options}    add_argument    --headless
+    Open Browser    ${URL}    ${BROWSER}    options=${options}
+    Set Selenium Speed    3s
+
+Fechar Navegador
+    Close Browser
+
+Create Chrome Options
+    ${options}=    Evaluate    sys.modules['selenium.webdriver.chrome.options'].Options()    sys, selenium.webdriver.chrome.options
+    Call Method    ${options}    add_argument    --headless
+    RETURN    ${options}
+
 Login
-    Open Browser    ${BASE_URL}    chrome
     Maximize Browser Window
 
 
@@ -55,6 +71,7 @@ Teste de criação de editoras
     Wait Until Element Is Visible    css=[itemid="registerBtn"]
     Click Element    css=[itemid="registerBtn"]
 
+    Wait Until Element Is Visible    css=[itemid="publisherNameInput"]
     Click Element    css=[itemid="publisherNameInput"]
 
     Input Text    css=[itemid="publisherNameInput"]    ${PUBLISHER_NAME}
@@ -68,9 +85,10 @@ Teste de criação de editoras
     Click Element    css=[itemid="saveBtn"]
 
     Sleep    3
-    
-    Close Browser
 
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
+    
 # Read
 Teste de visualizar detalhes da editora
     Login
@@ -82,7 +100,10 @@ Teste de visualizar detalhes da editora
 
     Click Element    css=[itemid="closeBtn"]
 
-    Close Browser
+    Sleep    3
+
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 #Update
 Teste de atualização da editora
@@ -108,9 +129,10 @@ Teste de atualização da editora
 
     Click Element    css=[itemid="saveBtn"]
 
-    Sleep    2
+    Sleep    3
 
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 # Delete
 Teste de exclusão de editora
@@ -125,7 +147,8 @@ Teste de exclusão de editora
 
     Sleep    3
 
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 Teste de exclusão de editora com aluguel ativo
     Login
@@ -134,7 +157,7 @@ Teste de exclusão de editora com aluguel ativo
     Wait Until Element Is Visible    css=[itemid="registerBtn"]
     Click Element    css=[itemid="registerBtn"]
 
-    Input Text    css=[itemid="deliveryInput"]    30/11/2024    
+    Input Text    css=[itemid="deliveryInput"]    30/01/2025 
 
     Wait Until Page Contains Element    xpath=//*[@itemid='renterInput']
     Wait Until Element Is Visible    xpath=//*[@itemid='renterInput']    timeout=5s
@@ -164,7 +187,8 @@ Teste de exclusão de editora com aluguel ativo
 
     Sleep    3
 
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 Teste de pesquisa
     Login
@@ -181,5 +205,7 @@ Teste de pesquisa
     Click Element    css=[itemid="closeSearchBtn"]
 
     Sleep    1
+
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
     
-    Close Browser

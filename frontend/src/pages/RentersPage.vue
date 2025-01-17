@@ -25,6 +25,7 @@
         :rows="sortedRows"
         :columns="columns"
         :icons="icons"
+        :iconsDescription="iconsDescription"
         @action="handleAction"
         @sort="handleSort"
       />
@@ -185,8 +186,11 @@ onMounted(() => {
 
   if (role.value === 'USER') {
     icons.value = ['visibility'];
+    iconsDescription.value = ['Detalhes'];
+
   } else if (role.value === 'ADMIN') {
     icons.value = ['visibility', 'edit', 'delete'];
+    iconsDescription.value = ['Detalhes', 'Editar', 'Deletar'];
     isAdmin.value = true;
   }
 });
@@ -280,6 +284,7 @@ const dialogs = ref({
 const role = ref(localStorage.getItem('role'))
 const isAdmin = ref(false);
 const icons = ref({});
+const iconsDescription = ref({});
 
 const handleAction = ({ row, icon }) => {
   if (icon === 'delete') {

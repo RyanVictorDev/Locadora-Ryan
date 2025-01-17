@@ -17,6 +17,7 @@ public interface RenterRepository extends JpaRepository<RenterModel, Integer> {
     UserDetails findByName(String name);
     RenterModel findByEmail(String email);
     RenterModel findByEmailAndIsDeletedFalse(String email);
+    RenterModel findByTelephoneAndIsDeletedFalse(String email);
     RenterModel findByCpf(String cpf);
     RenterModel findByCpfAndIsDeletedFalse(String cpf);
     Page<RenterModel> findAllByIsDeletedFalse(Pageable pageable);
@@ -27,6 +28,7 @@ public interface RenterRepository extends JpaRepository<RenterModel, Integer> {
             "(LOWER(REPLACE(u.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
             "OR LOWER(REPLACE(u.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
             "OR LOWER(REPLACE(u.cpf, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(u.address, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
             "OR LOWER(REPLACE(u.telephone, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))) " +
             "AND u.isDeleted = false")
     List<RenterModel> findAllByName(@Param("searchTerm") String searchTerm, Sort sort);
@@ -35,6 +37,7 @@ public interface RenterRepository extends JpaRepository<RenterModel, Integer> {
             "(LOWER(REPLACE(u.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
             "OR LOWER(REPLACE(u.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
             "OR LOWER(REPLACE(u.cpf, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(u.address, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
             "OR LOWER(REPLACE(u.telephone, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))) " +
             "AND u.isDeleted = false")
     Page<RenterModel> findAllByName(@Param("searchTerm") String searchTerm, Pageable pageable);

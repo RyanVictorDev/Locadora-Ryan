@@ -18,7 +18,7 @@
           </q-input>
         </q-form>
 
-        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list" itemid="filterBtn">
+        <!-- <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list" itemid="filterBtn">
           <q-list>
             <q-item clickable v-close-popup @click="statusFilter('RENTED')" itemid="filterAlugadosBtn">
               <q-item-section>
@@ -50,7 +50,7 @@
               </q-item-section>
             </q-item>
           </q-list>
-        </q-btn-dropdown>
+        </q-btn-dropdown> -->
       </div>
 
       <TableComponent
@@ -58,6 +58,7 @@
         :rows="sortedRows"
         :columns="columns"
         :icons="icons"
+        :iconsDescription="iconsDescription"
         @action="handleAction"
         @sort="handleSort"
       />
@@ -111,7 +112,7 @@
                 </template>
               </q-select>
 
-              <span>teste: {{ bookToRent.renterId }}</span>
+              <!-- <span>teste: {{ bookToRent.renterId }}</span> -->
 
               <q-select
                 itemid="bookInput"
@@ -171,22 +172,48 @@
 
           <q-card-section>
             <q-form @submit.prevent="editAction(dialogs.edit.row.id, rentToEdit)" class="q-gutter-md q-my-auto">
-              <q-input v-model="dialogs.edit.row.book.name" label="Título do livro" filled lazy-rules readonly/>
-              <q-input v-model="rentToEdit.renterName" label="ID do locatário" filled lazy-rules readonly/>
+              <!-- <q-input v-model="rentToEdit.bookName" label="Título do livro" filled lazy-rules readonly/>
+              <q-input v-model="rentToEdit.renterName" label="Locatário" filled lazy-rules readonly/> -->
               <q-input v-model="rentToEdit.deadLine" label="Devolução" type="date" mask="####-##-##" fill-mask filled lazy-rules itemid="deadLineInputUpdate"/>
 
               <q-select
+                itemid="renterInputUpdate"
                 filled
-                v-model="selectedRenter"
+                v-model="rentToEdit.renterName"
                 use-input
                 hide-selected
                 fill-input
                 input-debounce="0"
                 :options="renters"
                 option-label="name"
+                option-value="id"
                 @filter="rentersFilter"
-                @update:model-value="onItemClickEdit(selectedRenter, rentToEdit)"
+                @update:model-value="onItemClickEdit(rentToEdit.renterName, rentToEdit)"
                 label="Novo locatário"
+              >
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No results
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+
+              <q-select
+                itemid="bookInputUpdate"
+                filled
+                v-model="rentToEdit.bookName"
+                use-input
+                hide-selected
+                fill-input
+                input-debounce="0"
+                :options="books"
+                option-label="name"
+                option-value="id"
+                @filter="booksFilter"
+                @update:model-value="onBookClickEdit(rentToEdit.bookName, rentToEdit)"
+                label="Novo livro"
               >
                 <template v-slot:no-option>
                   <q-item>
@@ -227,6 +254,7 @@ onMounted(() => {
      icons.value = [];
    } else if (role.value === 'ADMIN') {
       icons.value = ['bookmark_border', 'edit'];
+      iconsDescription.value = ['Devolver', 'Editar']
       isAdmin.value = true;
     }
 });
@@ -330,7 +358,7 @@ const traduzirStatus = (status) => {
       return 'Atrasado';
 
     case 'DELIVERED_WITH_DELAY':
-      return 'Devolvido fora prazo';
+      return 'Devolvido fora do prazo';
   }
 };
 
@@ -352,6 +380,8 @@ const dialogs = ref({
 const role = ref(localStorage.getItem('role'))
 const isAdmin = ref(false);
 const icons = ref({});
+const iconsDescription = ref({});
+
 
 const handleAction = ({ row, icon }) => {
   if (icon === 'bookmark_border') {
@@ -363,6 +393,7 @@ const handleAction = ({ row, icon }) => {
     rentToEdit.value.renterId = row.renter.id;
     rentToEdit.value.deadLine = row.deadLine;
     rentToEdit.value.renterName = row.renter.name;
+    rentToEdit.value.bookName = row.book.name;
     dialogs.value.edit.visible = true;
   }
 };
@@ -449,7 +480,8 @@ const rentToEdit = ref({
   renterId: '',
   bookId: '',
   deadLine: '',
-  renterName: ''
+  renterName: '',
+  bookName: ''
 });
 
 const idRenter = ref('')
@@ -459,6 +491,11 @@ const idBook = ref('')
 const onItemClickEdit = (renterItem, rentToEdit) => {
   rentToEdit.renterId = renterItem.id;
   rentToEdit.renterName = renterItem.name;
+}
+
+const onBookClickEdit = (bookItem, rentToEdit) => {
+  rentToEdit.bookId = bookItem.id;
+  rentToEdit.bookName = bookItem.name;
 }
 
 const editRent = (id, rentToEdit) => {
@@ -480,7 +517,7 @@ const editRent = (id, rentToEdit) => {
 };
 
 const editAction = (id, rentToEdit) => {
-  console.log(id)
+  // console.log(id)
   editRent(id, rentToEdit);
 };
 
@@ -499,18 +536,14 @@ const rentersFilter = (val, update, abort) => {
   }
 };
 
+
 const books = ref([]);
 
 const getBooks = (srch = '') => {
-  api.get('/book', { params: { search: srch, page: page.value } })
+  api.get('/book', { params: { search: srch } })
     .then(response => {
-      if (Array.isArray(response.data.content)) {
-        books.value = response.data.content;
+        books.value = response.data;
         console.log(response.data)
-      } else {
-        console.error('A resposta da API não é um array:', response.data);
-        rows.value = [];
-      }
     })
     .catch(error => {
       console.error("Erro ao obter dados:", error);

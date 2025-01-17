@@ -19,12 +19,14 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
 
     @Query("SELECT u FROM UserModel u WHERE " +
             "(LOWER(REPLACE(u.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
-            "OR LOWER(REPLACE(u.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))) ")
+            "OR LOWER(REPLACE(u.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))) " +
+            "OR LOWER(CASE WHEN u.role = 'USER' THEN 'LEITOR' ELSE 'EDITOR' END) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))")
     List<UserModel> findAllByName(@Param("searchTerm") String searchTerm, Sort sort);
 
     @Query("SELECT u FROM UserModel u WHERE " +
             "(LOWER(REPLACE(u.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%')) " +
-            "OR LOWER(REPLACE(u.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))) ")
+            "OR LOWER(REPLACE(u.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))) " +
+            "OR LOWER(CASE WHEN u.role = 'USER' THEN 'LEITOR' ELSE 'EDITOR' END) LIKE LOWER(CONCAT('%', REPLACE(:searchTerm, ' ', ''), '%'))")
     Page<UserModel> findAllByName(@Param("searchTerm") String searchTerm, Pageable pageable);
 
     @Query("SELECT u FROM UserModel u WHERE LOWER(u.role) = LOWER(:role)")

@@ -20,7 +20,7 @@
         </q-form>
 
 
-        <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list" itemid="filterBtn">
+        <!-- <q-btn-dropdown color="teal-9" label="Filtrar" icon="filter_list" itemid="filterBtn">
           <q-list>
             <q-item clickable v-close-popup @click="permissionFilter('ADMIN')" itemid="filterEditorBtn">
               <q-item-section>
@@ -40,7 +40,7 @@
               </q-item-section>
             </q-item>
           </q-list>
-        </q-btn-dropdown>
+        </q-btn-dropdown> -->
       </div>
 
       <TableComponent
@@ -48,6 +48,7 @@
         :rows="sortedRows"
         :columns="columns"
         :icons="icons"
+        :iconsDescription="iconsDescription"
         @action="handleAction"
         @sort="handleSort"
       />
@@ -176,8 +177,11 @@ onMounted(() => {
 
   if (role.value === 'USER') {
     icons.value = ['visibility'];
+    iconsDescription.value = ['Detalhes'];
+
   } else if (role.value === 'ADMIN') {
     icons.value = ['visibility', 'edit'];
+    iconsDescription.value = ['Detalhes', 'Editar'];
     isAdmin.value = true;
   }
 });
@@ -291,6 +295,7 @@ const dialogs = ref({
 const role = ref(localStorage.getItem('role'))
 const isAdmin = ref(false);
 const icons = ref({});
+const iconsDescription = ref({});
 
 const handleAction = ({ row, icon }) => {
   if (icon === 'delete') {

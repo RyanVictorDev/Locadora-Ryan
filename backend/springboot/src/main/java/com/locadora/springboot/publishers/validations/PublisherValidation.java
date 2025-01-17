@@ -131,8 +131,14 @@ public class PublisherValidation {
         var books = bookRepository.findByPublisherId(id);
         for (var book : books) {
             if (rentRepository.existsByBookIdAndStatus(book.getId(), RentStatusEnum.RENTED)) {
-                throw new CustomValidationException("Não é possível excluir o editor. Existem livros atualmente alugados.");
+                throw new CustomValidationException("Não é possível excluir a editora. Existem livros atualmente alugados.");
             }
+            if (rentRepository.existsByBookId(book.getId())){
+                throw new CustomValidationException("Não é possível excluir a editora. Existem livros ligados a ela.");
+            }
+        }
+        if (!books.isEmpty()){
+            throw new CustomValidationException("Não é possível excluir a editora. Existem livros ligados a ela.");
         }
     }
 }

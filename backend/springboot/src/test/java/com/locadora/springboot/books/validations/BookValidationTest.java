@@ -114,14 +114,14 @@ class BookValidationTest {
 
     @Test
     void shouldDeleteBookWithActiveRent(){
-        when(rentRepository.existsByBookIdAndStatus(bookModel.getId(), RentStatusEnum.RENTED)).thenReturn(true);
+        when(rentRepository.existsByBookId(bookModel.getId())).thenReturn(true);
 
         assertThrows(CustomValidationException.class, () -> bookValidation.validDeleteBook(bookModel.getId()));
     }
 
     @Test
     void shouldDeleteBook(){
-        when(rentRepository.existsByBookIdAndStatus(bookModel.getId(), RentStatusEnum.RENTED)).thenReturn(false);
+        when(rentRepository.existsByBookId(bookModel.getId())).thenReturn(false);
 
         bookValidation.validDeleteBook(bookModel.getId());
     }

@@ -204,6 +204,6 @@ class PublisherValidationTest {
         lenient().when(rentRepository.existsByBookIdAndStatus(book.getId(), RentStatusEnum.RENTED)).thenReturn(true);
 
         var exception = assertThrows(CustomValidationException.class, () -> publisherValidation.validDeletePublisher(publisher.getId()));
-        assertTrue(exception.getMessage().contains("Não é possível excluir o editor. Existem livros atualmente alugados."));
+        assertTrue(exception.getMessage().contains("Não é possível excluir a editora. Existem livros atualmente alugados."));
     }
 }

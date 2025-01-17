@@ -40,6 +40,8 @@ public class RentValidation {
 
     public void update(UpdateRentRecordDTO data, int id){
         validateRenterIdUpdate(data);
+        validateRentRepeatedUpdate(data);
+        validateRentLateUpdate(data);
         validateBookIdUpdate(data);
         validateDeadLineUpdate(data, id);
     }
@@ -111,7 +113,19 @@ public class RentValidation {
         }
     }
 
+    private void validateRentRepeatedUpdate(UpdateRentRecordDTO data){
+        if (rentRepository.existsByRenterIdAndBookIdAndStatus(data.renterId(), data.bookId(), RentStatusEnum.RENTED)){
+            throw new CustomValidationException("O locatário já alugou este livro.");
+        }
+    }
+
     private void validateRentLate(CreateRentRequestDTO data){
+        if (rentRepository.existsByRenterIdAndStatus(data.renterId(), RentStatusEnum.LATE)){
+            throw new CustomValidationException("Locatário está com aluguel atrasado.");
+        }
+    }
+
+    private void validateRentLateUpdate(UpdateRentRecordDTO data){
         if (rentRepository.existsByRenterIdAndStatus(data.renterId(), RentStatusEnum.LATE)){
             throw new CustomValidationException("Locatário está com aluguel atrasado.");
         }

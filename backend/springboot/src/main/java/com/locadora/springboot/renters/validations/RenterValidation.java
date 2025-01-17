@@ -30,12 +30,14 @@ public class RenterValidation {
     public void create(CreateRenterRequestDTO data){
         validateName(data);
         validateEmail(data);
+        validateTelephone(data);
         validateCPF(data);
     }
 
     public void update(UpdateRenterRequestDTO data, int id){
         validateUpdateName(data);
         validateUpdateEmail(data, id);
+        validateUpdateTelephone(data, id);
         validateCPFUpdate(data, id);
     }
 
@@ -67,6 +69,26 @@ public class RenterValidation {
         if (!Objects.equals(renter.getEmail(), data.email())){
             if (renterRepository.findByEmailAndIsDeletedFalse(data.email()) != null) {
                 throw new CustomValidationException("E-mail já em uso.");
+            }
+        }
+    }
+
+    private void validateTelephone(CreateRenterRequestDTO data){
+        if (data.telephone() == "" || data.telephone() == null){
+            throw new CustomValidationException("O telefone não pode estar vazio.");
+        };
+
+        if (renterRepository.findByTelephoneAndIsDeletedFalse(data.telephone()) != null){
+            throw new CustomValidationException("Este telefone já está em uso.");
+        }
+    }
+
+    private void validateUpdateTelephone(UpdateRenterRequestDTO data, int id){
+        RenterModel renter = renterRepository.findById(id).get();
+
+        if (!Objects.equals(renter.getTelephone(), data.telephone())){
+            if (renterRepository.findByTelephoneAndIsDeletedFalse(data.telephone()) != null) {
+                throw new CustomValidationException("Telefone já em uso.");
             }
         }
     }
@@ -106,8 +128,8 @@ public class RenterValidation {
     }
 
     public void validateDeleteRenter(int id){
-            if (rentRepository.existsByRenterIdAndStatus(id, RentStatusEnum.RENTED)) {
-                throw new CustomValidationException("Não é possível excluir o locatário. Existem livros atualmente alugados.");
+            if (rentRepository.existsByRenterId(id)) {
+                throw new CustomValidationException("Não é possível excluir o locatário. Existem livros ligados a ele.");
             }
     }
 }

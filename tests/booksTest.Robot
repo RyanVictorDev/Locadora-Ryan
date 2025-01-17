@@ -1,13 +1,17 @@
 *** Settings ***
-Library           RequestsLibrary
 Library           Collections
 Library           BuiltIn
 Library           SeleniumLibrary
 Library           XML
 Library           DateTime
+Suite Setup    Iniciar Navegador
+Suite Teardown    Fechar Navegador
 
 *** Variables ***
-${BASE_URL}          http://localhost:8888
+${BROWSER}    firefox
+${URL}        https://locadora-ryan.altislabtech.com.br/
+${HEADLESS_OPTIONS}    ${EMPTY}
+${BASE_URL}          http://localhost:7171
 ${EMAIL}       admin@gmail.com
 ${PASSWORD}    12345678
 
@@ -19,12 +23,25 @@ ${BOOK_LAUNCH_DATE}    15/11/2024
 ${BOOK_NAME_UPDATED}    Livro Testes Robot Updated
 ${BOOK_AUTHOR_UPDATED}    Robot Updated
 
-${DEADLINE}    30/11
+${DEADLINE}    30/12/2024
 
 
 *** Keywords ***
+Iniciar Navegador
+    ${options}=    Evaluate    sys.modules['selenium.webdriver'].FirefoxOptions()    sys, selenium.webdriver
+    Call Method    ${options}    add_argument    --headless
+    Open Browser    ${URL}    ${BROWSER}    options=${options}
+    Set Selenium Speed    3s
+
+Fechar Navegador
+    Close Browser
+
+Create Chrome Options
+    ${options}=    Evaluate    sys.modules['selenium.webdriver.chrome.options'].Options()    sys, selenium.webdriver.chrome.options
+    Call Method    ${options}    add_argument    --headless
+    RETURN    ${options}
+
 Login
-    Open Browser    ${BASE_URL}    chrome
     Maximize Browser Window
 
 
@@ -72,9 +89,10 @@ Teste de criação de livros
     Click Element    css=[itemid="saveBtn"]
 
     Sleep    3
-    
-    Close Browser
 
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
+    
 Teste de aluguél de livro
     Login
     Click Element    css=[itemid="Controle de livros"]
@@ -96,7 +114,8 @@ Teste de aluguél de livro
 
     Sleep    10
 
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 # Update
 Teste de edição de livros
@@ -132,9 +151,10 @@ Teste de edição de livros
     Click Element    css=[itemid="saveBtn"]
 
     Sleep    3
-    
-    Close Browser
 
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
+    
 # Delete
 Teste de exclusão de livros
     Login
@@ -148,7 +168,8 @@ Teste de exclusão de livros
 
     Sleep    3
 
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 Teste de exclusão de livros alugados
     Login
@@ -162,7 +183,8 @@ Teste de exclusão de livros alugados
 
     Sleep    3
 
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 Teste de pesquisa
     Login
@@ -180,4 +202,5 @@ Teste de pesquisa
 
     Sleep    1
     
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]

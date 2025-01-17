@@ -25,6 +25,7 @@
         :rows="sortedRows"
         :columns="columns"
         :icons="icons"
+        :iconsDescription="iconsDescription"
         @action="handleAction"
         @sort="handleSort"
       />
@@ -150,19 +151,20 @@
               <q-input v-model="bookInforEdit.author" label="Autor" filled lazy-rules itemid="updateAuthInput"/>
               <q-input v-model="bookInforEdit.totalQuantity" label="Estoque" filled lazy-rules itemid="updateQuantityInput"/>
               <q-input v-model="bookInforEdit.launchDate" label="Data de lançamento" type="date" filled lazy-rules itemid="updateLaunchDateInput"/>
-              <q-input v-model="bookInforEdit.publisherId" label="Id da editora" filled lazy-rules readonly/>
+              <!-- <q-input v-model="bookInforEdit.publisherId" label="Id da editora" filled lazy-rules readonly/> -->
 
               <q-select
                 filled
-                v-model="selectedPublisher"
+                v-model="bookInforEdit.publisherName"
                 use-input
                 hide-selected
                 fill-input
                 input-debounce="0"
                 :options="publishers"
                 option-label="name"
+                option-value="id"
                 @filter="publishersFilter"
-                @update:model-value="onItemClickEdit(selectedPublisher, bookInforEdit)"
+                @update:model-value="onItemClickEdit(bookInforEdit.publisherName, bookInforEdit)"
                 label="Nova editora"
               >
                 <template v-slot:no-option>
@@ -219,6 +221,7 @@ onMounted(() => {
     icons.value = [];
   } else if (role.value === 'ADMIN') {
     icons.value = ['bookmark', 'edit', 'delete'];
+    iconsDescription.value = ['Alugar', 'Editar', 'Deletar'];
     isAdmin.value = true;
   }
 });
@@ -324,6 +327,7 @@ const dialogs = ref({
 const role = ref(localStorage.getItem('role'));
 const isAdmin = ref(false);
 const icons = ref({});
+const iconsDescription = ref({});
 
 const handleAction = ({ row, icon }) => {
   if (icon === 'delete') {
@@ -398,7 +402,8 @@ const showMore = (id) => {
       author: response.data.author,
       totalQuantity: response.data.totalQuantity,
       launchDate: response.data.launchDate,
-      publisherId: response.data.publisher.id
+      publisherId: response.data.publisher.id,
+      publisherName: response.data.publisher.name
     }
 
     bookInforEdit.value = filteredData;

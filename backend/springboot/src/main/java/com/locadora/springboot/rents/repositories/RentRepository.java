@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface RentRepository extends JpaRepository<RentModel, Integer> {
     boolean existsByBookIdAndStatus(int bookId, RentStatusEnum status);
+    boolean existsByBookId(int bookId);
+    boolean existsByRenterId(int renterId);
     boolean existsByRenterIdAndStatus(int renterId, RentStatusEnum status);
     boolean existsByRenterIdAndBookIdAndStatus(int renterId, int bookId, RentStatusEnum status);
     List<RentModel> findAllByStatus(RentStatusEnum status);
@@ -24,15 +26,31 @@ public interface RentRepository extends JpaRepository<RentModel, Integer> {
     @Query("SELECT u FROM RentModel u " +
             "JOIN u.renter r " +
             "JOIN u.book b " +
-            "WHERE LOWER(REPLACE(r.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
-            "OR LOWER(REPLACE(b.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%'))")
+            "WHERE (LOWER(REPLACE(r.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(b.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(CAST(u.devolutionDate AS string), ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(CAST(u.rentDate AS string), ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(CAST(u.deadLine AS string), ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(CASE WHEN u.status = 'RENTED' THEN 'ALUGADO' " +
+            "WHEN u.status = 'LATE' THEN 'ATRASADO' " +
+            "WHEN u.status = 'DELIVERED' THEN 'DEVOLVIDO' " +
+            "WHEN u.status = 'DELIVERED_WITH_DELAY' THEN 'DEVOLVIDO FORA DO PRAZO' " +
+            "WHEN u.status = 'IN_TIME' THEN 'DEVOLVIDO NO PRAZO' END) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%'))) ")
     List<RentModel> findAllByRenterNameOrBookName(@Param("search") String search, Sort sort);
 
     @Query("SELECT u FROM RentModel u " +
             "JOIN u.renter r " +
             "JOIN u.book b " +
-            "WHERE LOWER(REPLACE(r.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
-            "OR LOWER(REPLACE(b.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%'))")
+            "WHERE (LOWER(REPLACE(r.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(b.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(CAST(u.devolutionDate AS string), ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(CAST(u.rentDate AS string), ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(REPLACE(CAST(u.deadLine AS string), ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%')) " +
+            "OR LOWER(CASE WHEN u.status = 'RENTED' THEN 'ALUGADO' " +
+            "WHEN u.status = 'LATE' THEN 'ATRASADO' " +
+            "WHEN u.status = 'DELIVERED' THEN 'DEVOLVIDO' " +
+            "WHEN u.status = 'DELIVERED_WITH_DELAY' THEN 'DEVOLVIDO FORA DO PRAZO' " +
+            "WHEN u.status = 'IN_TIME' THEN 'DEVOLVIDO NO PRAZO' END) LIKE LOWER(CONCAT('%', REPLACE(:search, ' ', ''), '%'))) ")
     Page<RentModel> findAllByRenterNameOrBookName(@Param("search") String search, Pageable pageable);
 
     @Query("SELECT u FROM RentModel u WHERE LOWER(u.status) = LOWER(:status)")

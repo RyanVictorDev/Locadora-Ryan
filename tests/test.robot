@@ -1,29 +1,45 @@
 *** Settings ***
-Library           RequestsLibrary
 Library           Collections
 Library           BuiltIn
 Library           SeleniumLibrary
-Library            XML
+Library           XML
+Suite Setup    Iniciar Navegador
+Suite Teardown    Fechar Navegador
 
 
 *** Variables ***
-${BASE_URL}          http://localhost:8888
+${BROWSER}    firefox
+${URL}        https://locadora-ryan.altislabtech.com.br/
+${BASE_URL}          www.google.com
 ${EMAIL}       admin@gmail.com
 ${PASSWORD}    12345678
-
+${HEADLESS_OPTIONS}    ${EMPTY}
 
 *** Keywords ***
+Iniciar Navegador
+    ${options}=    Evaluate    sys.modules['selenium.webdriver'].FirefoxOptions()    sys, selenium.webdriver
+    Call Method    ${options}    add_argument    --headless
+    Open Browser    ${URL}    ${BROWSER}    options=${options}
+    Set Selenium Speed    3s
+
+Fechar Navegador
+    Close Browser
+
+Create Chrome Options
+    ${options}=    Evaluate    sys.modules['selenium.webdriver.chrome.options'].Options()    sys, selenium.webdriver.chrome.options
+    Call Method    ${options}    add_argument    --headless
+    RETURN    ${options}
+
 Login
-    Open Browser    ${BASE_URL}    chrome
     Maximize Browser Window
 
 
-    Wait Until Element Is Visible    css=[itemid="emailInput"]    timeout=10s
+    Wait Until Element Is Visible    css=[itemid="emailInput"]    timeout=1000s
     Click Element    css=[itemid="emailInput"]
     Element Should Be Enabled        css=[itemid="emailInput"]
     Input Text    css=[itemid="emailInput"]    ${EMAIL}
 
-    Wait Until Element Is Visible    css=[itemid="passwordInput"]    timeout=10s
+    Wait Until Element Is Visible    css=[itemid="passwordInput"]    timeout=1000s
     Click Element    css=[itemid="passwordInput"]
     Element Should Be Enabled        css=[itemid="passwordInput"]
     Input Text    css=[itemid="passwordInput"]    ${PASSWORD}
@@ -35,17 +51,16 @@ Login
 *** Test Cases ***
 Teste De Login Válido
     Login
-
-    Close Browser
+    
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]
 
 Teste de Logout
     Login
-    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=10s
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
     Click Element    css=[itemid="logoutBtn"]
 
     Sleep    2
-
-    Close Browser
 
 Teste de sidebar
     Login
@@ -67,4 +82,5 @@ Teste de sidebar
     Click Element    css=[itemid="Relatório geral"]
     Sleep    1
 
-    Close Browser
+    Wait Until Element Is Visible    css=[itemid="logoutBtn"]    timeout=1000s
+    Click Element    css=[itemid="logoutBtn"]

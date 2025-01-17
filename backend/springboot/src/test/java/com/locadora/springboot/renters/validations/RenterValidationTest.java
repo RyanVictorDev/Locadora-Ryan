@@ -148,7 +148,7 @@ class RenterValidationTest {
 
     @Test
     void shouldDeleteRenterWithActiveRent(){
-        when(rentRepository.existsByRenterIdAndStatus(existingRenter.getId(), RentStatusEnum.RENTED)).thenReturn(true);
+        when(rentRepository.existsByRenterId(existingRenter.getId())).thenReturn(true);
 
         assertThrows(CustomValidationException.class, () -> renterValidation.validateDeleteRenter(existingRenter.getId()));
     }

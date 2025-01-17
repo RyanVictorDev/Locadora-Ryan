@@ -8,6 +8,7 @@ import com.locadora.springboot.books.validations.BookValidation;
 import com.locadora.springboot.exceptions.ModelNotFoundException;
 import com.locadora.springboot.publishers.models.PublisherModel;
 import com.locadora.springboot.publishers.repositories.PublisherRepository;
+import com.locadora.springboot.renters.models.RenterModel;
 import com.locadora.springboot.rents.models.RentModel;
 import com.locadora.springboot.rents.models.RentStatusEnum;
 import com.locadora.springboot.rents.repositories.RentRepository;
@@ -64,6 +65,7 @@ public class BookServices {
                 List<RentModel> totalRented = rentRepository.findAllByBookIdAndStatus(book.getId(), RentStatusEnum.RENTED);
                 List<RentModel> totalLate = rentRepository.findAllByBookIdAndStatus(book.getId(), RentStatusEnum.LATE);
                 book.setTotalInUse(totalRented.size() + totalLate.size());
+                bookRepository.save(book);
             }
 
             return books;
@@ -71,6 +73,14 @@ public class BookServices {
         } else {
             Page<BookModel> bookSearch = bookRepository.findAllByName(search, pageable);
             return bookSearch;
+        }
+    }
+
+    public List<BookModel> findAllWithoutPagination(String search) {
+        if (Objects.equals(search, "")) {
+            return bookRepository.findAllByIsDeletedFalse(Sort.by(Sort.Direction.DESC, "id"));
+        } else {
+            return bookRepository.findAllByName(search, Sort.by(Sort.Direction.DESC, "id"));
         }
     }
 
